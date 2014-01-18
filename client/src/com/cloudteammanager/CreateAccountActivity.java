@@ -1,6 +1,7 @@
 package com.cloudteammanager;
 
 import com.cloudteammanager.dal.SyncManager;
+import com.cloudteammanager.dal.User;
 import com.cloudteammanager.utils.Pair;
 import com.cloudteammanager.utils.PostTask;
 
@@ -37,11 +38,14 @@ public class CreateAccountActivity extends Activity {
 				new Pair<String, String>("Registration", "registering account..."), 
 				new PostTask() {
 					public void run(Object obj) {
-						Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
-						
-						Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-						startActivity(i);
-						finish();
+						User user = (User)obj;
+						if(user != null) {
+							Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
+							
+							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+							startActivity(i);
+							finish();
+						}
 					}
 		});
 		/*

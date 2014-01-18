@@ -1,5 +1,7 @@
 package com.cloudteammanager;
 
+import com.cloudteammanager.dal.User;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ public class ManagementMenuActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_management_menu);
+		
+		User user = (User)this.getIntent().getExtras().getParcelable("user");
 	}
 
 	@Override

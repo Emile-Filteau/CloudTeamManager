@@ -43,7 +43,9 @@ public class MainActivity extends Activity {
 					public void run(Object obj) {
 						User user = ((User)obj);
 						if(user != null) {
-							Log.i("test", user.getEmail());
+							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+							i.putExtra("user", user);
+							startActivity(i);
 						} else {
 							new AlertDialog.Builder(MainActivity.this)
 					        .setIcon(android.R.drawable.ic_dialog_alert)

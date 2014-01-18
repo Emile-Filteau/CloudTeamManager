@@ -1,6 +1,11 @@
 package com.cloudteammanager.dal;
 
-public class User {
+import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
 	private Integer id;
 	private String username;
 	private String email;
@@ -29,5 +34,34 @@ public class User {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public User(Parcel in) {
+		this.id = in.readInt();
+		this.username = in.readString();
+		this.email = in.readString();
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(id);
+		dest.writeString(username);
+		dest.writeString(email);
 	}	
+	
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public User createFromParcel(Parcel in) {
+            return new User(in); 
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
