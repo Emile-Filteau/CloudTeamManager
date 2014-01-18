@@ -15,14 +15,16 @@ public class Task implements Parcelable {
 	private int estimated_time;
 	private int took_time;
 	private int status;
+	private String memberName;
 	
-	public Task(int id, String name, int member_id, int estimated_time, int took_time, int status) {
+	public Task(int id, String name, int member_id, int estimated_time, int took_time, int status, String memberName) {
 		this.id = id;
 		this.name = name;
 		this.member_id = member_id;
 		this.estimated_time = estimated_time;
 		this.took_time = took_time;
 		this.status = status;
+		this.memberName = memberName;
 	}
 
 	public int getId() {
@@ -43,6 +45,10 @@ public class Task implements Parcelable {
 
 	public int getTook_time() {
 		return took_time;
+	}
+	
+	public String getMemberName() {
+		return memberName;
 	}
 
 	public static Parcelable.Creator getCreator() {

@@ -30,7 +30,8 @@ public class TaskDAO {
 			for(int i=0; i<task_array.length();i++) {
 				JSONObject task_obj = new JSONObject(task_array.getString(i));
 				Task t = new Task(task_obj.getInt("id"), task_obj.getString("name"), task_obj.getInt("member_id"), 
-						task_obj.getInt("estimated_time"), task_obj.getInt("took_time"), task_obj.getInt("status"));
+						task_obj.getInt("estimated_time"), task_obj.getInt("took_time"), task_obj.getInt("status"),
+						task_obj.getString("username"));
 				tasks.add(t);
 			}
 			

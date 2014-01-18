@@ -27,7 +27,7 @@ public class TeamsManagementActivity extends Activity {
 	private User user;
 	private List<Team> teams;
 	private LinearLayout teamsLayout;
-	private LinearLayout teamsDeleteLayout;
+	//private LinearLayout teamsDeleteLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class TeamsManagementActivity extends Activity {
 			@Override
 			public void run(Object obj) {
 				teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
-				teamsDeleteLayout = (LinearLayout) findViewById(R.id.teamsDeleteLayout);
+				//teamsDeleteLayout = (LinearLayout) findViewById(R.id.teamsDeleteLayout);
 				
 				for (final Team team : (List<Team>) obj) {
 					addTeam(team);			
@@ -111,11 +111,11 @@ public class TeamsManagementActivity extends Activity {
 		button.setText(team.getName());
 		
 		teamsLayout.addView(button);
-		
+		/*
 		Button deleteButton = new Button(this);
 		deleteButton.setText("X");
 		teamsDeleteLayout.addView(deleteButton);	
-		
+		*/
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -125,12 +125,12 @@ public class TeamsManagementActivity extends Activity {
 				startActivity(i);
 			}				
 		});
-		
+		/*
 		deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				
 			}				
-		});		
+		});		*/
 	}
 }

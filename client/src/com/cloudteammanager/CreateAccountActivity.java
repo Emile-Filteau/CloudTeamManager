@@ -61,6 +61,16 @@ public class CreateAccountActivity extends Activity {
 								i.putExtra("user", user);
 								startActivity(i);
 								finish();
+							} else {
+								new AlertDialog.Builder(CreateAccountActivity.this)
+						        .setIcon(android.R.drawable.ic_dialog_alert)
+						        .setTitle("Account Creation Failure")
+						        .setMessage("The requested username is already taken")
+						        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+						         {
+						        	public void onClick(DialogInterface arg0, int arg1) {
+						        	}
+						         }).show();
 							}
 						}
 			});

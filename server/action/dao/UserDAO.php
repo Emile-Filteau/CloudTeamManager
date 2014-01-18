@@ -29,30 +29,37 @@ class UserDAO {
 		$connection = Connection::getConnection();
 		$password = sha1($password);
 		
-		//Add the user to the database
-		$statement = $connection->prepare('INSERT INTO users(username, password, email) VALUES (:username, :password, :email)');
-		
-		$statement->bindParam(":username", $username);
-		$statement->bindParam(":password", $password);
-		$statement->bindParam(":email", $email);
-		$statement->execute();
-		
-		//Get the last inserted ID
-		$statement = $connection->prepare('SELECT MAX(ID) "id" FROM users');
+		$statementCheck = $connection->prepare('SELECT * FROM users WHERE username = :paramUsername'); 
+		$statement->bindParam(":paramUsername", $username);
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		$statement->execute();
-		$row = $statement->fetch();
+		if(!$statement->fetch()) {
 		
-		//Get the user you just inserted and return it
-		$statement = $connection->prepare('SELECT * FROM users WHERE id = :id');
-		$statement->bindParam(":id", $row['id']);
-		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		$statement->execute();
-		$user = null;
-		if($row = $statement->fetch()) {  
-			$user = $row;
-			$passIndex = array_search('password', array_keys($user));
-			array_splice($user, $passIndex, 1);
+			//Add the user to the database
+			$statement = $connection->prepare('INSERT INTO users(username, password, email) VALUES (:username, :password, :email)');
+			
+			$statement->bindParam(":username", $username);
+			$statement->bindParam(":password", $password);
+			$statement->bindParam(":email", $email);
+			$statement->execute();
+			
+			//Get the last inserted ID
+			$statement = $connection->prepare('SELECT MAX(ID) "id" FROM users');
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$statement->execute();
+			$row = $statement->fetch();
+			
+			//Get the user you just inserted and return it
+			$statement = $connection->prepare('SELECT * FROM users WHERE id = :id');
+			$statement->bindParam(":id", $row['id']);
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$statement->execute();
+			$user = null;
+			if($row = $statement->fetch()) {  
+				$user = $row;
+				$passIndex = array_search('password', array_keys($user));
+				array_splice($user, $passIndex, 1);
+			}
 		}
 		Connection::closeConnection();
 		return $user;
