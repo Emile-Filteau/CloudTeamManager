@@ -6,6 +6,12 @@ class CalendarDAO {
 	public static function syncCalendar($user_id, $events) {
 		$connection = Connection::getConnection();
 		
+		$statement = $connection->prepare('DELETE FROM calendar_events WHERE user_id = :user_id'); 
+		$statement->bindParam(":user_id", $user_id);
+		
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		$statement->execute();
+		
 		$priority = 0;
 		$event_type = 0;
 		foreach($events as $event) {
