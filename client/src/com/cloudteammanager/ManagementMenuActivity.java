@@ -1,6 +1,9 @@
 package com.cloudteammanager;
 
+import com.cloudteammanager.dal.SyncManager;
 import com.cloudteammanager.dal.User;
+import com.cloudteammanager.utils.Pair;
+import com.cloudteammanager.utils.PostTask;
 
 import android.app.Activity;
 import android.content.Intent;

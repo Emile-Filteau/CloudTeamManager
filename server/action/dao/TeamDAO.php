@@ -5,14 +5,14 @@ class TeamDAO {
 	
 	public static function getUserTeams($user_id) {
 		$connection = Connection::getConnection();
-		$password = sha1($password);
+		
 		$statement = $connection->prepare('SELECT * FROM teams WHERE id IN (SELECT team_id FROM team_members WHERE user_id = :paramId)'); 
 		
 		$statement->bindParam(":paramId", $user_id);
 		
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		$statement->execute();
-		$teams = null;
+		$teams = array();
 		while($row = $statement->fetch()) {  
 			array_push($teams, $row);
 		}
