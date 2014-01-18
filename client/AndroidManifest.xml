@@ -7,7 +7,8 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
-	<uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" /> 
     
@@ -19,16 +20,23 @@
         <activity
             android:name="com.cloudteammanager.MainActivity"
             android:label="@string/title_activity_main" >
-            
             <intent-filter>
-            	<action android:name="android.intent.action.MAIN" />
-            	<category android:name="android.intent.category.LAUNCHER" />
-        	</intent-filter>
-        
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.cloudteammanager.ManagementMenuActivity"
             android:label="@string/title_management_menu" >
+        </activity>
+        <activity
+            android:name="com.cloudteammanager.CalendarManagementActivity"
+            android:label="@string/title_activity_calendar_management" >
+        </activity>
+        <activity
+            android:name="com.cloudteammanager.TeamsManagementActivity"
+            android:label="@string/title_activity_projects_management" >
         </activity>
     </application>
 

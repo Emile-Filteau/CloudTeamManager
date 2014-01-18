@@ -1,8 +1,10 @@
 package com.cloudteammanager;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 public class ManagementMenuActivity extends Activity {
 
@@ -19,4 +21,13 @@ public class ManagementMenuActivity extends Activity {
 		return true;
 	}
 
+	public void startCalendarManagement(View v) {
+		Intent i = new Intent(getApplicationContext(), CalendarManagementActivity.class);
+		startActivity(i);
+	}
+	
+	public void startTeamsManagement(View v) {
+		Intent i = new Intent(getApplicationContext(), TeamsManagementActivity.class);
+		startActivity(i);
+	}
 }
