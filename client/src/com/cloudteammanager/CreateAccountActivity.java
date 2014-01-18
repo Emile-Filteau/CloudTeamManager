@@ -43,6 +43,7 @@ public class CreateAccountActivity extends Activity {
 							Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
 							
 							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+							i.putExtra("user", user);
 							startActivity(i);
 							finish();
 						}

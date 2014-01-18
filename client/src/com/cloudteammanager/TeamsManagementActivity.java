@@ -16,41 +16,45 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.cloudteammanager.dal.SyncManager;
 import com.cloudteammanager.dal.Team;
+import com.cloudteammanager.dal.User;
+import com.cloudteammanager.utils.Pair;
+import com.cloudteammanager.utils.PostTask;
 
 public class TeamsManagementActivity extends Activity {
-	private List<Team> teams;
+	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams_management);
 		
-		// TODO: Populate the team names with a query
-		teams = new ArrayList<Team>();
-		
-		teams.add(new Team(1, "Team 1"));
-		teams.add(new Team(2, "Team 2"));
-		teams.add(new Team(3, "Team 3"));
+		user = getIntent().getExtras().getParcelable("user");
+		new SyncManager().getUserTeams(this, user.getId(), new Pair<String, String>("Loading teams", "Loading teams"), new PostTask() {
+			@Override
+			public void run(Object obj) {
+				List<Team> teams = (List<Team>) obj;
 
-		LinearLayout teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
+				LinearLayout teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
 
-		for (final Team team : teams) {
-			Button button = new Button(this);
-			button.setText(team.getName());
+				for (final Team team : teams) {
+					Button button = new Button(TeamsManagementActivity.this);
+					button.setText(team.getName());
 
-			teamsLayout.addView(button);
-			
-			button.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent i = new Intent(getApplicationContext(), TeamActivity.class);
-					i.putExtra("team", team);
-					startActivity(i);
-				}				
-			});			
-		}
-
+					teamsLayout.addView(button);
+					
+					button.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Intent i = new Intent(getApplicationContext(), TeamActivity.class);
+							i.putExtra("team", team);
+							startActivity(i);
+						}				
+					});			
+				}
+			}			
+		});
 	}
 
 	@Override
