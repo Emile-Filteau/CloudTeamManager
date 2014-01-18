@@ -269,7 +269,7 @@ public class TeamActivity extends Activity {
 		startDate.set(Calendar.HOUR_OF_DAY, 0);
 		startDate.set(Calendar.MINUTE, 0);
 		
-		long startMinutes = startDate.getTime().getTime() / 60 / 1000;
+		long startMinutes = startDate.getTimeInMillis() / 60 / 1000;
 		
 		endDate.set(Calendar.HOUR_OF_DAY, 7);
 		endDate.set(Calendar.MINUTE, 0);
@@ -287,7 +287,7 @@ public class TeamActivity extends Activity {
 			endDate.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		
-		long endMinutes = endDate.getTime().getTime() / 60 / 1000;
+		long endMinutes = endDate.getTimeInMillis() / 60 / 1000;
 		
 		Collections.sort(events);
 		
