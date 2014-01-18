@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CreateEventActivity"
+    android:background="#3399FF" >
+
+    <ScrollView
+           android:layout_weight="1"
+            android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"	>
+    		
+    <LinearLayout 
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        
+	        <TextView 
+	            android:id="@+id/event_name_input"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#000000"
+	            android:text="Event name: "/>
+	        
+	        <EditText 
+	            android:id="@+id/create_account_username"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            />
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#000000"
+	            android:text="Start date: "/>
+	        
+	        <DatePicker 
+	            android:id="@+id/start_datepicker"
+	            android:calendarViewShown="false"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            />
+	    </LinearLayout>
+	        
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#000000"
+	            android:text="End date: "/>
+	        
+	        <DatePicker 
+	            android:id="@+id/end_datepicker"
+	            android:calendarViewShown="false"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            />
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+	        
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#000000"
+	            android:text="Description: "/>
+	        
+	        <EditText 
+	            android:id="@+id/description_input"
+	            android:layout_width="fill_parent"
+	            android:minLines="3"
+	            android:lines="3"
+	            android:maxLines="3"
+	            android:singleLine="false"
+	            android:layout_height="wrap_content"
+	            />
+	    </LinearLayout>
+	    
+        <Button
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Create account"
+	        android:onClick="createAccount" />
+	    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

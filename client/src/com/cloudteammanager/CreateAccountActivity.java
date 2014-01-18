@@ -6,6 +6,8 @@ import com.cloudteammanager.utils.Pair;
 import com.cloudteammanager.utils.PostTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,26 +36,34 @@ public class CreateAccountActivity extends Activity {
 		String username = ((EditText)findViewById(R.id.create_account_username)).getText().toString();
 		String password = ((EditText)findViewById(R.id.create_account_password)).getText().toString();
 		String email = ((EditText)findViewById(R.id.create_account_email)).getText().toString();
-		manager.register(this, username, password, email, 
-				new Pair<String, String>("Registration", "registering account..."), 
-				new PostTask() {
-					public void run(Object obj) {
-						User user = (User)obj;
-						if(user != null) {
-							Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
-							
-							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-							i.putExtra("user", user);
-							startActivity(i);
-							finish();
-						}
-					}
-		});
-		/*
-		Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
 		
-		Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-		startActivity(i);
-		finish();*/
+		if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+			new AlertDialog.Builder(this)
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setTitle("One of the fields is empty")
+	        .setMessage("The username, password and email can't be empty")
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+	         {
+	        	public void onClick(DialogInterface arg0, int arg1) {
+	        	}
+	         }).show();
+		}
+		else {
+			manager.register(this, username, password, email, 
+					new Pair<String, String>("Registration", "registering account..."), 
+					new PostTask() {
+						public void run(Object obj) {
+							User user = (User)obj;
+							if(user != null) {
+								Toast.makeText(getApplicationContext(), "Account created", Toast.LENGTH_SHORT).show();
+								
+								Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+								i.putExtra("user", user);
+								startActivity(i);
+								finish();
+							}
+						}
+			});
+		}
 	}
 }
