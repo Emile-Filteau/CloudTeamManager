@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import com.cloudteammanager.dal.network.TeamDAO;
 import com.cloudteammanager.dal.network.UserDAO;
 import com.cloudteammanager.utils.Pair;
 import com.cloudteammanager.utils.PostTask;
@@ -33,6 +34,16 @@ public class SyncManager {
 			public void run() {
 				User user = UserDAO.register(username, password, email);
 				setResult(user);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
+	public void getUserTeams(Activity activity, final Integer user_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				List<Team> teams = TeamDAO.getUserTeams(user_id);
+				setResult(teams);
 			}
 		};
 		execAsync(activity, task, postTask, alertMessages);

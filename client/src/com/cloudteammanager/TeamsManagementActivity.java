@@ -33,9 +33,9 @@ public class TeamsManagementActivity extends Activity {
 		// TODO: Populate the team names with a query
 		teams = new ArrayList<Team>();
 		
-		teams.add(new Team(1, "Team 1", null));
-		teams.add(new Team(2, "Team 2", null));
-		teams.add(new Team(3, "Team 3", null));
+		teams.add(new Team(1, "Team 1"));
+		teams.add(new Team(2, "Team 2"));
+		teams.add(new Team(3, "Team 3"));
 
 		LinearLayout teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
 
@@ -82,7 +82,7 @@ public class TeamsManagementActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						// TODO: Actually add the team in the database						
 						Intent i = new Intent(getApplicationContext(), TeamActivity.class);
-						i.putExtra("team", new Team(10, teamNameInput.getText().toString(), null));
+						i.putExtra("team", new Team(10, teamNameInput.getText().toString()));
 						startActivity(i);
 					}
 				})

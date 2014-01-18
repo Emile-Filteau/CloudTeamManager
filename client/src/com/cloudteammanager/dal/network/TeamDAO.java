@@ -28,6 +28,11 @@ public class TeamDAO {
 		String result = HTTPRequester.executeRequest(controller, "getUserTeams", params);
 		try {
 			JSONArray team_array = new JSONArray(result);
+			for(int i=0; i<team_array.length();i++) {
+				JSONObject team_obj = new JSONObject(team_array.getString(i));
+				Team t = new Team(team_obj.getInt("id"), team_obj.getString("name"));
+				teams.add(t);
+			}
 			
 		} catch (JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());

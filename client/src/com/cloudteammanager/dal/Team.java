@@ -1,5 +1,6 @@
 package com.cloudteammanager.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
@@ -10,10 +11,10 @@ public class Team implements Parcelable {
 	private String name;
 	private List<User> users;
 	
-	public Team(int id, String name, List<User> users) {
+	public Team(int id, String name) {
 		this.id = id;
 		this.name = name;
-		this.users = users;
+		this.users = new ArrayList<User>();
 	}
 
 	public int getId() {
