@@ -19,38 +19,56 @@ class TeamDAO {
 		Connection::closeConnection();
 		return $teams;
 	}
-	/*
-	public static function register($username, $password, $email) {
+	
+	public static function createTeam($team_name, $user_id) {
 		$connection = Connection::getConnection();
-		$password = sha1($password);
 		
 		//Add the user to the database
-		$statement = $connection->prepare('INSERT INTO users(username, password, email) VALUES (:username, :password, :email)');
+		$statement = $connection->prepare('INSERT INTO teams(name) VALUES (:name)');
 		
-		$statement->bindParam(":username", $username);
-		$statement->bindParam(":password", $password);
-		$statement->bindParam(":email", $email);
+		$statement->bindParam(":name", $team_name);
 		$statement->execute();
 		
 		//Get the last inserted ID
-		$statement = $connection->prepare('SELECT MAX(ID) "id" FROM users');
+		$statement = $connection->prepare('SELECT MAX(ID) "id" FROM teams');
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		$statement->execute();
 		$row = $statement->fetch();
 		
+		$statement2 = $connection->prepare('INSERT INTO team_members(user_id, team_id) VALUES (:user_id, :team_id)');
+		
+		$statement2->bindParam(":user_id", $user_id);
+		$statement2->bindParam(":team_id", $row['id']);
+		$statement2->execute();
+		
 		//Get the user you just inserted and return it
-		$statement = $connection->prepare('SELECT * FROM users WHERE id = :id');
+		$statement = $connection->prepare('SELECT * FROM teams WHERE id = :id');
 		$statement->bindParam(":id", $row['id']);
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		$statement->execute();
-		$user = null;
+		$team = null;
 		if($row = $statement->fetch()) {  
-			$user = $row;
-			$passIndex = array_search('password', array_keys($user));
-			array_splice($user, $passIndex, 1);
+			$team = $row;
 		}
 		Connection::closeConnection();
-		return $user;
-	}*/
+		return $team;
+	}
+	
+	public static function getTeamMembers($team_id) {
+		$connection = Connection::getConnection();
+		
+		$statement = $connection->prepare('SELECT id, username, email FROM users WHERE id IN (SELECT user_id FROM team_members WHERE team_id = :paramId)'); 
+		
+		$statement->bindParam(":paramId", $team_id);
+		
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		$statement->execute();
+		$users = array();
+		while($row = $statement->fetch()) {
+			array_push($users, $row);
+		}
+		Connection::closeConnection();
+		return $users;
+	}
 	
 }

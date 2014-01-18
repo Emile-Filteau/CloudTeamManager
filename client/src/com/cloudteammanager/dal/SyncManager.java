@@ -49,6 +49,26 @@ public class SyncManager {
 		execAsync(activity, task, postTask, alertMessages);
 	}
 	
+	public void createTeam(Activity activity, final String team_name, final Integer user_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				Team team = TeamDAO.createTeam(team_name, user_id);
+				setResult(team);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
+	public void getTeamMembers(Activity activity, final Integer team_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				List<User> users = TeamDAO.getTeamMembers(team_id);
+				setResult(users);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
 	private class Task implements Runnable {
 		private Object result;
 		public Object getResult() {
