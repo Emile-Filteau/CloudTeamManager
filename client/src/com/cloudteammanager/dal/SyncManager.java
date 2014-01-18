@@ -74,7 +74,8 @@ public class SyncManager {
 	public void addMemberToTeam(Activity activity, final Integer team_id, final String username, Pair<String, String> alertMessages, PostTask postTask) {
 		Task task = new Task() {
 			public void run() {
-				TeamDAO.addMemberToTeam(team_id, username);
+				User user = TeamDAO.addMemberToTeam(team_id, username);
+				setResult(user);
 			}
 		};
 		execAsync(activity, task, postTask, alertMessages);
