@@ -9,6 +9,8 @@ import android.app.ProgressDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import com.cloudteammanager.dal.calendar.Event;
+import com.cloudteammanager.dal.network.CalendarDAO;
 import com.cloudteammanager.dal.network.TeamDAO;
 import com.cloudteammanager.dal.network.UserDAO;
 import com.cloudteammanager.utils.Pair;
@@ -64,6 +66,15 @@ public class SyncManager {
 			public void run() {
 				List<User> users = TeamDAO.getTeamMembers(team_id);
 				setResult(users);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
+	public void syncCalendar(Activity activity, final Integer user_id, final List<Event> events, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				CalendarDAO.syncCalendar(user_id, events);
 			}
 		};
 		execAsync(activity, task, postTask, alertMessages);
