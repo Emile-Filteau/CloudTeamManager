@@ -1,8 +1,17 @@
 package com.cloudteammanager;
 
+import com.cloudteammanager.dal.SyncManager;
+import com.cloudteammanager.dal.User;
+import com.cloudteammanager.dal.network.UserDAO;
+import com.cloudteammanager.utils.Pair;
+import com.cloudteammanager.utils.PostTask;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -23,12 +32,39 @@ public class MainActivity extends Activity {
 	}
 
 	public void connect(View v) {
-		EditText usernameTxt = (EditText) findViewById(R.id.main_login_username);
-		EditText passwordTxt = (EditText) findViewById(R.id.main_login_password);
-
-		// TODO: Add verification for the username / password combo before starting the next activity
-		Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-		startActivity(i);
+		// get EditText by id
+		EditText username = (EditText) findViewById(R.id.main_login_username);
+		EditText password = (EditText) findViewById(R.id.main_login_password);
+		
+		SyncManager manager = new SyncManager();
+		manager.authenticate(this, username.getText().toString(), password.getText().toString(), 
+				new Pair<String, String>("Authentication", "logging in..."), 
+				new PostTask() {
+					public void run(Object obj) {
+						User user = ((User)obj);
+						if(user != null) {
+							Log.i("test", user.getEmail());
+						} else {
+							new AlertDialog.Builder(MainActivity.this)
+					        .setIcon(android.R.drawable.ic_dialog_alert)
+					        .setTitle("Authentification fail")
+					        .setMessage("bad username or password")
+					        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+					         {
+					        	public void onClick(DialogInterface arg0, int arg1) {
+					        	}
+					         }).show();
+						}
+					}
+				}
+		);
+		
+		//UserDAO.authenticate(username.getText().toString(), password.getText().toString());
+		/*
+		if (inputTxt.getText().toString().equals("ok")) {
+			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+			startActivity(i);
+		}*/
 	}
 	
 	public void createNewAccount(View v) {

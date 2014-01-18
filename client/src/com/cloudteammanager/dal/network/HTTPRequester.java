@@ -33,7 +33,8 @@ public class HTTPRequester {
 			}
 			
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("127.0.0.1" + "/" + controller + ".php");
+			HttpPost httppost = new HttpPost("http://jumbala.net" + "/" + controller + ".php");
+
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
