@@ -9,14 +9,9 @@ import com.cloudteammanager.dal.User;
 
 public class UserDAO {
 	
-	private String controller = "user_manager";
+	private static String controller = "usermanager";
 	
-	
-	public UserDAO() {
-		
-	}
-	
-	public User authenticate(String username, String password) {
+	public static User authenticate(String username, String password) {
 		User user = null;
 		JSONObject params = new JSONObject();
 		try {
@@ -27,8 +22,13 @@ public class UserDAO {
 		}
 		
 		String result = HTTPRequester.executeRequest(controller, "authenticate", params);
-		
-		Log.i("UserDAO::authenticate", result);
+		Log.i("test", "result :" + result );
+		try {
+			JSONObject json_result = new JSONObject(result);
+			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
+		} catch (JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
 		
 		return user;
 	}
