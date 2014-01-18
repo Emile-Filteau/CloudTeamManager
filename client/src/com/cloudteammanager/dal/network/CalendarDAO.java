@@ -34,7 +34,7 @@ public class CalendarDAO {
 		} catch(JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
-		
+		Log.i("test", "Params : " + params.toString());
 		String result = HTTPRequester.executeRequest(controller, "syncCalendar", params);
 		Log.i("test", "Result : " + result);
 		

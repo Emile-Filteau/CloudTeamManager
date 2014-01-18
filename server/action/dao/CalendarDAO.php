@@ -5,6 +5,7 @@ class CalendarDAO {
 	
 	public static function syncCalendar($user_id, $events) {
 		$connection = Connection::getConnection();
+		
 		$priority = 0;
 		$event_type = 0;
 		foreach($events as $event) {
