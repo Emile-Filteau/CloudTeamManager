@@ -1,8 +1,11 @@
 package com.cloudteammanager;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
@@ -19,4 +22,13 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	public void connect(View v) {
+		// get EditText by id
+		EditText inputTxt = (EditText) findViewById(R.id.main_login_password);
+				
+		if (inputTxt.getText().toString().equals("ok")) {
+			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+			startActivity(i);
+		}
+	}
 }

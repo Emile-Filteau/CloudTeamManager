@@ -25,6 +25,10 @@
         	</intent-filter>
         
         </activity>
+        <activity
+            android:name="com.cloudteammanager.ManagementMenuActivity"
+            android:label="@string/title_management_menu" >
+        </activity>
     </application>
 
 </manifest>
