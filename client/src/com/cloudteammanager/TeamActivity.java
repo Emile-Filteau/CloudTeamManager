@@ -110,7 +110,7 @@ public class TeamActivity extends Activity {
 							userView.setLayoutParams(new LayoutParams(
 						            LayoutParams.MATCH_PARENT,
 						            LayoutParams.WRAP_CONTENT));
-							userView.setText(" - " + task.getName());
+							userView.setText(" - " + task.getName() + " ( " + task.getMemberName() + " ) ");
 							userView.setTextSize(24);
 							userView.setPadding(20, 0, 0, 10);
 							

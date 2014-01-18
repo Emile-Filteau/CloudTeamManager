@@ -74,8 +74,12 @@ public class CalendarManagementActivity extends Activity {
 	    for (int j = 0; j < diffDate.size(); j++) {
 	      Group group = new Group(diffDate.get(j));
 	      for (int i = 0; i < listeEvents.size(); i++) {
-	    	  if(diffDate.get(j).equals(df.format(listeEvents.get(i).getStart_date())))
-	    		  group.children.add(listeEvents.get(i).getName());
+	    	  if(diffDate.get(j).equals(df.format(listeEvents.get(i).getStart_date()))){
+	    		  String minute = Integer.toString(listeEvents.get(i).getStart_date().getMinutes());
+	    		  if(minute.equals("0"))
+	    			  	minute="00";
+	    		  group.children.add(listeEvents.get(i).getStart_date().getHours()+":"+minute +"   "+ listeEvents.get(i).getName());
+	    	  }
 	      }
 	      groups.append(j, group);
 	    }
@@ -100,8 +104,10 @@ public class CalendarManagementActivity extends Activity {
 		 });
 	 }
 	 
-	 public void addEvent(View v) {
-		 Intent i = new Intent(getApplicationContext(), CreateEventActivity.class);
+	 public void createEvent(View v) {
+		 /*Intent i = new Intent(getApplicationContext(), CreateEventActivity.class);
 		 startActivity(i);
+		 finish();*/
+		 this.calendarManager.openCalendarActivity(this);
 	 }
 }

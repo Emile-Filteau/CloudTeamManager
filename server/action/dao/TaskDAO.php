@@ -6,7 +6,7 @@ class TaskDAO {
 	public static function getTeamTasks($team_id) {
 		$connection = Connection::getConnection();
 		
-		$statement = $connection->prepare('SELECT * FROM task WHERE team_id = :teamId'); 
+		$statement = $connection->prepare('SELECT task.*, users.username FROM task, users WHERE task.team_id = :teamId AND users.id = task.member_id'); 
 		
 		$statement->bindParam(":teamId", $team_id);
 		
