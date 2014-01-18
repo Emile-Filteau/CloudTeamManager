@@ -62,4 +62,29 @@ public class TeamDAO {
 		
 		return team;
 	}
+	
+	public static List<User> getTeamMembers(Integer team_id) {
+		List<User> users = new ArrayList<User>();
+		JSONObject params = new JSONObject();
+		try {
+			params.put("user_id", team_id);
+		} catch(JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		String result = HTTPRequester.executeRequest(controller, "getTeamMembers", params);
+		try {
+			JSONArray user_array = new JSONArray(result);
+			for(int i=0; i<user_array.length();i++) {
+				JSONObject user_obj = new JSONObject(user_array.getString(i));
+				User user = new User(user_obj.getInt("id"), user_obj.getString("username"), user_obj.getString("email"));
+				users.add(user);
+			}
+			
+		} catch (JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		return users;
+	}
 }

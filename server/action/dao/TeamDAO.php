@@ -54,4 +54,21 @@ class TeamDAO {
 		return $team;
 	}
 	
+	public static function getTeamMembers($team_id) {
+		$connection = Connection::getConnection();
+		
+		$statement = $connection->prepare('SELECT id, username, email FROM users WHERE id IN (SELECT user_id FROM team_members WHERE team_id = :paramId)'); 
+		
+		$statement->bindParam(":paramId", $team_id);
+		
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		$statement->execute();
+		$users = array();
+		while($row = $statement->fetch()) {
+			array_push($users, $row);
+		}
+		Connection::closeConnection();
+		return $users;
+	}
+	
 }

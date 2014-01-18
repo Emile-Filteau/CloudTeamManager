@@ -14,4 +14,8 @@ class TeamManagerAction {
 	public function createTeam($team_name, $user_id) {
 		return TeamDAO::createTeam($team_name, $user_id);
 	}
+	
+	public function getTeamMembers($team_id) {
+		return TeamDAO::getTeamMembers($team_id);
+	}
 }
