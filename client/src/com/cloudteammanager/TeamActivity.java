@@ -41,6 +41,8 @@ public class TeamActivity extends Activity {
 		user = getIntent().getParcelableExtra("user");
 		team = getIntent().getParcelableExtra("team");
 		
+		this.setTitle("Team : " + team.getName());
+		
 		new SyncManager().getTeamMembers(
 				this, 
 				team.getId(), 

@@ -20,6 +20,8 @@ public class ManagementMenuActivity extends Activity {
 		setContentView(R.layout.activity_management_menu);
 		
 		user = (User)this.getIntent().getExtras().getParcelable("user");
+		
+		this.setTitle("My Cloud : " + user.getUsername());
 	}
 
 	@Override
