@@ -27,8 +27,8 @@ public class CalendarDAO {
 				JSONObject event_object = new JSONObject();
 				event_object.put("name", event.getName());
 				event_object.put("description", event.getDescription());
-				event_object.put("start_date", event.getStart_date().getTime());
-				event_object.put("end_date", event.getEnd_date().getTime());
+				event_object.put("start_date", (Long)event.getStart_date().getTime());
+				event_object.put("end_date", (Long)event.getEnd_date().getTime());
 				events_array.put(event_object);
 			}
 			params.put("events", events_array);

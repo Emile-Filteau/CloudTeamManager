@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -132,16 +133,19 @@ public class TeamActivity extends Activity {
 						meetupLayout.removeAllViews();
 						for (Event event : availabilities) {
 							TextView userView = new TextView(TeamActivity.this);
-							userView.setLayoutParams(new LayoutParams(
-						            LayoutParams.MATCH_PARENT,
-						            LayoutParams.WRAP_CONTENT));
-							
-							SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+							LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					           LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+					        params.weight = 1.0f;
+					        params.gravity = Gravity.CENTER;
+
+							userView.setLayoutParams(params);
+							//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+							SimpleDateFormat df = new SimpleDateFormat("E, d/M/yyyy HH:mm");
 							
 							String startDate = df.format(event.getStart_date());
 							String endDate = df.format(event.getEnd_date());
 								
-							userView.setText(startDate + "    " + endDate);
+							userView.setText(startDate + " -- " + endDate);
 							
 							userView.setTextSize(12);
 							userView.setPadding(20, 0, 0, 10);
