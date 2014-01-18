@@ -1,5 +1,6 @@
 package com.cloudteammanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,12 +11,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
-import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -33,6 +32,8 @@ public class TeamActivity extends Activity {
 	private List<User> teamMembers;
 	private List<Task> tasks;
 	
+	private LinearLayout usersLayout;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class TeamActivity extends Activity {
 
 		user = getIntent().getParcelableExtra("user");
 		team = getIntent().getParcelableExtra("team");
+		
+		teamMembers = new ArrayList<User>();
 		
 		this.setTitle("Team : " + team.getName());
 		
@@ -50,21 +53,10 @@ public class TeamActivity extends Activity {
 				new PostTask() {
 					@Override
 					public void run(Object obj) {
-						teamMembers = (List<User>) obj;
-						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.users_layout);
+						usersLayout = (LinearLayout) findViewById(R.id.users_layout);
 						
-						for (User user : teamMembers) {
-							TextView userView = new TextView(TeamActivity.this);
-							userView.setLayoutParams(new LayoutParams(
-						            LayoutParams.MATCH_PARENT,
-						            LayoutParams.WRAP_CONTENT));
-							userView.setText(" - " + user.getUsername());
-							userView.setTextSize(24);
-							userView.setPadding(20, 0, 0, 10);
-							
-							usersLayout.addView(userView);
-							
-							//Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+						for (User user : (List<User>) obj) {
+							addTeamMember(user);
 						}
 					}
 		});
@@ -145,7 +137,20 @@ public class TeamActivity extends Activity {
 								new PostTask() {
 									@Override
 									public void run(Object obj) {
-										teamMembers.add((User)obj);
+										if (obj == null) {
+											new AlertDialog.Builder(TeamActivity.this)
+									        .setIcon(android.R.drawable.ic_dialog_alert)
+									        .setTitle("Invalid username")
+									        .setMessage("The username you entered is invalid")
+									        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+									         {
+									        	public void onClick(DialogInterface arg0, int arg1) {
+									        	}
+									         }).show();
+										}
+										else {
+											addTeamMember((User) obj);
+										}
 									}
 						});
 					}
@@ -159,6 +164,21 @@ public class TeamActivity extends Activity {
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+	
+	private void addTeamMember(User user) {
+		teamMembers.add(user);
+		
+		TextView userView = new TextView(TeamActivity.this);
+		userView.setLayoutParams(
+				new LayoutParams(
+	            LayoutParams.MATCH_PARENT,
+	            LayoutParams.WRAP_CONTENT));
+		userView.setText(" - " + user.getUsername());
+		userView.setTextSize(24);
+		userView.setPadding(20, 0, 0, 10);
+		
+		usersLayout.addView(userView);
 	}
 	
 	public void createTask(View v) {
