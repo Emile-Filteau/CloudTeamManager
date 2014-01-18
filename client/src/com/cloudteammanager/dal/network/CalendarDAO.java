@@ -28,9 +28,9 @@ public class CalendarDAO {
 				event_object.put("description", event.getDescription());
 				event_object.put("start_date", event.getStart_date().getTime());
 				event_object.put("end_date", event.getEnd_date().getTime());
-				events_array.put(event_object.toString());
+				events_array.put(event_object);
 			}
-			params.put("events", events_array.toString());
+			params.put("events", events_array);
 		} catch(JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
