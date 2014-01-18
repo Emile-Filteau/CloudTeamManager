@@ -6,35 +6,49 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.cloudteammanager.dal.Team;
+
 public class TeamsManagementActivity extends Activity {
-	private List<String> teamNames;
+	private List<Team> teams;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams_management);
-
+		
 		// TODO: Populate the team names with a query
-		teamNames = new ArrayList<String>();
-		teamNames.add("Team 1");
-		teamNames.add("Team 2");
-		teamNames.add("Team 3");
+		teams = new ArrayList<Team>();
+		
+		teams.add(new Team(1, "Team 1", null));
+		teams.add(new Team(2, "Team 2", null));
+		teams.add(new Team(3, "Team 3", null));
 
 		LinearLayout teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
 
-		for (String name : teamNames) {
+		for (final Team team : teams) {
 			Button button = new Button(this);
-			button.setText(name);
+			button.setText(team.getName());
 
 			teamsLayout.addView(button);
+			
+			button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent i = new Intent(getApplicationContext(), TeamActivity.class);
+					i.putExtra("team", team);
+					startActivity(i);
+				}				
+			});			
 		}
 
 	}
@@ -62,7 +76,10 @@ public class TeamsManagementActivity extends Activity {
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						teamNames.add(teamNameInput.getText().toString());
+						// TODO: Actually add the team in the database						
+						Intent i = new Intent(getApplicationContext(), TeamActivity.class);
+						i.putExtra("team", new Team(10, teamNameInput.getText().toString(), null));
+						startActivity(i);
 					}
 				})
 				.setNegativeButton("Cancel",

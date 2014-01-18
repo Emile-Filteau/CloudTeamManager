@@ -44,13 +44,14 @@ public class UserDAO {
 		}
 		
 		String result = HTTPRequester.executeRequest(controller, "register", params);
-		try {
-			JSONObject json_result = new JSONObject(result);
-			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
-		} catch (JSONException e) {
-			Log.e("UserDAO::authenticate", e.getMessage());
+		if(result != null) {
+			try {
+				JSONObject json_result = new JSONObject(result);
+				user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
+			} catch (JSONException e) {
+				Log.e("UserDAO::authenticate", e.getMessage());
+			}
 		}
-		
 		return user;
 	}
 }

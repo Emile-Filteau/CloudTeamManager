@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
 						User user = ((User)obj);
 						if(user != null) {
 							Log.i("test", user.getEmail());
+							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+							startActivity(i);
 						} else {
 							new AlertDialog.Builder(MainActivity.this)
 					        .setIcon(android.R.drawable.ic_dialog_alert)
@@ -60,11 +62,6 @@ public class MainActivity extends Activity {
 		);
 		
 		//UserDAO.authenticate(username.getText().toString(), password.getText().toString());
-		/*
-		if (inputTxt.getText().toString().equals("ok")) {
-			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-			startActivity(i);
-		}*/
 	}
 	
 	public void createNewAccount(View v) {

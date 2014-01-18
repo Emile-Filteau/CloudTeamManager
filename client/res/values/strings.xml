@@ -9,5 +9,6 @@
     <string name="title_activity_projects_management">Teams Management</string>
     <string name="title_activity_create_account">Create Account</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_team">TeamActivity</string>
 
 </resources>
