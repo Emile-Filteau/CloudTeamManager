@@ -15,7 +15,7 @@ public class TaskDAO {
 	
 	private static String controller = "taskmanager";
 	
-	public static List<Task> getUserTeams(Integer team_id) {
+	public static List<Task> getTeamTasks(Integer team_id) {
 		List<Task> tasks = new ArrayList<Task>();
 		JSONObject params = new JSONObject();
 		try {

@@ -31,34 +31,30 @@
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
-
-                    <LinearLayout
+                       <LinearLayout
                         android:id="@+id/tab1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="HOME" >
+                        android:contentDescription="HOME"
+                        android:orientation="vertical" >
  
-                            <TextView
-                                        android:id="@+id/textView1"
-                                        android:layout_width="204dp"
-                                        android:layout_height="match_parent"
-                                        android:paddingLeft="10dp"
-                                        android:text="TAB 1"/>
-                            
-                            <ScrollView
-                                        android:id="@+id/textView2"
-                                        android:layout_width="204dp"
-                                        android:layout_height="match_parent"
-                                        android:paddingLeft="10dp"
-                                        android:text="TAB 2">
-                            
-                               <LinearLayout
-					               android:id="@+id/tasks_layout" 
-								   android:orientation="vertical"
-								   android:layout_width="fill_parent"
-								   android:layout_height="fill_parent"/>
-                               
-                               </ScrollView>
+                        <ScrollView
+				           android:layout_weight="1"
+				            android:layout_width="fill_parent"
+				    		android:layout_height="fill_parent"	>
+				    		
+				           <LinearLayout
+				               android:id="@+id/tasks_layout" 
+							   android:orientation="vertical"
+							   android:layout_width="fill_parent"
+							   android:layout_height="wrap_content"/>
+				       </ScrollView>
+     
+				   	   <Button 
+					        android:layout_width="fill_parent"
+					        android:layout_height="wrap_content"
+					        android:text="Create Task"
+					        android:onClick="createTask"/>
                     
                         </LinearLayout>
 

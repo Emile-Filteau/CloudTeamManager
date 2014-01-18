@@ -8,7 +8,7 @@
         android:id="@+id/userNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Team name" 
+        android:hint="Team member name" 
         android:textColor="#000">
  
         <requestFocus />

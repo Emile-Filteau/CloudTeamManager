@@ -20,6 +20,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.cloudteammanager.dal.SyncManager;
+import com.cloudteammanager.dal.Task;
 import com.cloudteammanager.dal.Team;
 import com.cloudteammanager.dal.User;
 import com.cloudteammanager.utils.Pair;
@@ -30,6 +31,7 @@ public class TeamActivity extends Activity {
 	private User user;
 	private Team team;
 	private List<User> teamMembers;
+	private List<Task> tasks;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class TeamActivity extends Activity {
 		new SyncManager().getTeamMembers(
 				this, 
 				team.getId(), 
-				new Pair<String, String>("Retrieving team members", "Retrieving team members..."), 
+				new Pair<String, String>("Loading team", "Retrieving team members..."), 
 				new PostTask() {
 					@Override
 					public void run(Object obj) {
@@ -55,6 +57,32 @@ public class TeamActivity extends Activity {
 						            LayoutParams.MATCH_PARENT,
 						            LayoutParams.WRAP_CONTENT));
 							userView.setText(" - " + user.getUsername());
+							userView.setTextSize(24);
+							userView.setPadding(20, 0, 0, 10);
+							
+							usersLayout.addView(userView);
+							
+							//Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+						}
+					}
+		});
+		
+		new SyncManager().getTeamTasks(
+				this, 
+				team.getId(), 
+				new Pair<String, String>("Loading team", "Retrieving tasks..."), 
+				new PostTask() {
+					@Override
+					public void run(Object obj) {
+						tasks = (List<Task>) obj;
+						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.tasks_layout);
+						
+						for (Task task : tasks) {
+							TextView userView = new TextView(TeamActivity.this);
+							userView.setLayoutParams(new LayoutParams(
+						            LayoutParams.MATCH_PARENT,
+						            LayoutParams.WRAP_CONTENT));
+							userView.setText(" - " + task.getName());
 							userView.setTextSize(24);
 							userView.setPadding(20, 0, 0, 10);
 							
@@ -129,5 +157,12 @@ public class TeamActivity extends Activity {
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+	
+	public void createTask(View v) {
+		Intent i = new Intent(getApplicationContext(), CreateTaskActivity.class);
+		i.putExtra("team", team);
+		i.putExtra("user", user);
+		startActivity(i);
 	}
 }

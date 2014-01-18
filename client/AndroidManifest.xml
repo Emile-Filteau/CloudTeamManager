@@ -46,6 +46,10 @@
             android:name="com.cloudteammanager.TeamActivity"
             android:label="@string/title_activity_team" >
         </activity>
+        <activity
+            android:name="com.cloudteammanager.CreateTaskActivity"
+            android:label="@string/title_activity_create_task" >
+        </activity>
     </application>
 
 </manifest>

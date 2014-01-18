@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 
 import com.cloudteammanager.dal.calendar.Event;
 import com.cloudteammanager.dal.network.CalendarDAO;
+import com.cloudteammanager.dal.network.TaskDAO;
 import com.cloudteammanager.dal.network.TeamDAO;
 import com.cloudteammanager.dal.network.UserDAO;
 import com.cloudteammanager.utils.Pair;
@@ -76,6 +77,15 @@ public class SyncManager {
 			public void run() {
 				User user = TeamDAO.addMemberToTeam(team_id, username);
 				setResult(user);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
+	public void getTeamTasks(Activity activity, final Integer team_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				setResult(TaskDAO.getTeamTasks(team_id));
 			}
 		};
 		execAsync(activity, task, postTask, alertMessages);

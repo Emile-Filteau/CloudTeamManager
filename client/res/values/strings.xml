@@ -2,13 +2,14 @@
 <resources>
 
     <string name="app_name">CloudTeamManager</string>
-    <string name="title_activity_main">CloudTeamManager</string>
-    <string name="title_management_menu">Management Menu</string>
+    <string name="title_activity_main">Cloud Team Manager</string>
+    <string name="title_management_menu">My Cloud Manager</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_calendar_management">Calendar Management</string>
-    <string name="title_activity_projects_management">Teams Management</string>
-    <string name="title_activity_create_account">Create Account</string>
+    <string name="title_activity_calendar_management">My Calendar</string>
+    <string name="title_activity_projects_management">My Teams</string>
+    <string name="title_activity_create_account">Create New Account</string>
+    <string name="title_activity_create_task">Create New Task</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_team">TeamActivity</string>
+    <string name="title_activity_team">Team</string>
 
 </resources>
