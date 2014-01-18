@@ -6,7 +6,7 @@ $action = new CalendarManagerAction();
 $paramString = stripslashes($_POST["params"]);
 $params = json_decode($paramString, true);
 if(isset($_POST["action"])) {
-	if($_POST["action"] == "syncCalendar") {
+	if($_POST["action"] == "syncCalendar") {;
 		echo(json_encode($action->syncCalendar($params["user_id"], $params["events"])));
 	}
 }
