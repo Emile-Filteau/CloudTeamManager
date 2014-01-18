@@ -52,6 +52,6 @@ public class TaskDAO {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
 		
-		HTTPRequester.executeRequest(controller, "getTeamTasks", params);
+		HTTPRequester.executeRequest(controller, "createTask", params);
 	}
 }

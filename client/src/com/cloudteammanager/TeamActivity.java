@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +33,7 @@ public class TeamActivity extends Activity {
 	private Team team;
 	private List<User> teamMembers;
 	private List<Task> tasks;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,27 @@ public class TeamActivity extends Activity {
 		
 		this.setTitle("Team : " + team.getName());
 		
+		tabHost = (TabHost) findViewById(R.id.tab_host);
+		tabHost.setup();
+
+		TabSpec spec1 = tabHost.newTabSpec("Tasks");
+		spec1.setContent(R.id.tab1);
+		spec1.setIndicator("Tasks");
+
+		TabSpec spec2 = tabHost.newTabSpec("Meetups");
+		spec2.setContent(R.id.tab2);
+		spec2.setIndicator("Meetups");
+
+		TabSpec spec3 = tabHost.newTabSpec("Participants");
+		spec3.setContent(R.id.tab3);
+		spec3.setIndicator("Participants");
+		
+		tabHost.addTab(spec1);
+		tabHost.addTab(spec2);
+		tabHost.addTab(spec3);
+	}
+	
+	private void fillContent() {
 		new SyncManager().getTeamMembers(
 				this, 
 				team.getId(), 
@@ -52,7 +75,7 @@ public class TeamActivity extends Activity {
 					public void run(Object obj) {
 						teamMembers = (List<User>) obj;
 						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.users_layout);
-						
+						usersLayout.removeAllViews();
 						for (User user : teamMembers) {
 							TextView userView = new TextView(TeamActivity.this);
 							userView.setLayoutParams(new LayoutParams(
@@ -77,8 +100,8 @@ public class TeamActivity extends Activity {
 					@Override
 					public void run(Object obj) {
 						tasks = (List<Task>) obj;
-						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.tasks_layout);
-						
+						LinearLayout taskLayout = (LinearLayout) findViewById(R.id.tasks_layout);
+						taskLayout.removeAllViews();
 						for (Task task : tasks) {
 							TextView userView = new TextView(TeamActivity.this);
 							userView.setLayoutParams(new LayoutParams(
@@ -88,31 +111,12 @@ public class TeamActivity extends Activity {
 							userView.setTextSize(24);
 							userView.setPadding(20, 0, 0, 10);
 							
-							usersLayout.addView(userView);
+							taskLayout.addView(userView);
 							
 							//Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
 						}
 					}
 		});
-		
-		tabHost = (TabHost) findViewById(R.id.tab_host);
-		tabHost.setup();
-
-		TabSpec spec1 = tabHost.newTabSpec("Tasks");
-		spec1.setContent(R.id.tab1);
-		spec1.setIndicator("Tasks");
-
-		TabSpec spec2 = tabHost.newTabSpec("Meetups");
-		spec2.setContent(R.id.tab2);
-		spec2.setIndicator("Meetups");
-
-		TabSpec spec3 = tabHost.newTabSpec("Participants");
-		spec3.setContent(R.id.tab3);
-		spec3.setIndicator("Participants");
-		
-		tabHost.addTab(spec1);
-		tabHost.addTab(spec2);
-		tabHost.addTab(spec3);
 	}
 
 	@Override
@@ -166,5 +170,10 @@ public class TeamActivity extends Activity {
 		i.putExtra("team", team);
 		i.putExtra("user", user);
 		startActivity(i);
+	}
+	
+	protected void onResume() {
+		super.onResume();
+		fillContent();
 	}
 }

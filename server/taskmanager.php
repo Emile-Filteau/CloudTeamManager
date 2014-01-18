@@ -9,7 +9,7 @@ $paramString = stripslashes($_POST["params"]);
 $params = json_decode($paramString, true);
 if(isset($_POST["action"])) {
 	if($_POST["action"] == "getTeamTasks") {
-		echo(json_encode($action->getUserTeams($params["team_id"])));
+		echo(json_encode($action->getTeamTasks($params["team_id"])));
 	} else if($_POST["action"] == "createTask") {
 		echo(json_encode($action->createTask($params["team_id"], $params["name"], $params["estimated_time"], $params["member_id"])));
 	}
