@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -31,6 +32,7 @@ public class TeamActivity extends Activity {
 	private Team team;
 	private List<User> teamMembers;
 	private List<Task> tasks;
+
 	
 	private LinearLayout usersLayout;
 	
@@ -45,47 +47,6 @@ public class TeamActivity extends Activity {
 		teamMembers = new ArrayList<User>();
 		
 		this.setTitle("Team : " + team.getName());
-		
-		new SyncManager().getTeamMembers(
-				this, 
-				team.getId(), 
-				new Pair<String, String>("Loading team", "Retrieving team members..."), 
-				new PostTask() {
-					@Override
-					public void run(Object obj) {
-						usersLayout = (LinearLayout) findViewById(R.id.users_layout);
-						
-						for (User user : (List<User>) obj) {
-							addTeamMember(user);
-						}
-					}
-		});
-		
-		new SyncManager().getTeamTasks(
-				this, 
-				team.getId(), 
-				new Pair<String, String>("Loading team", "Retrieving tasks..."), 
-				new PostTask() {
-					@Override
-					public void run(Object obj) {
-						tasks = (List<Task>) obj;
-						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.tasks_layout);
-						
-						for (Task task : tasks) {
-							TextView userView = new TextView(TeamActivity.this);
-							userView.setLayoutParams(new LayoutParams(
-						            LayoutParams.MATCH_PARENT,
-						            LayoutParams.WRAP_CONTENT));
-							userView.setText(" - " + task.getName());
-							userView.setTextSize(24);
-							userView.setPadding(20, 0, 0, 10);
-							
-							usersLayout.addView(userView);
-							
-							//Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
-						}
-					}
-		});
 		
 		tabHost = (TabHost) findViewById(R.id.tab_host);
 		tabHost.setup();
@@ -105,6 +66,48 @@ public class TeamActivity extends Activity {
 		tabHost.addTab(spec1);
 		tabHost.addTab(spec2);
 		tabHost.addTab(spec3);
+	}
+	
+	private void fillContent() {
+		new SyncManager().getTeamMembers(
+				this, 
+				team.getId(), 
+				new Pair<String, String>("Loading team", "Retrieving team members..."), 
+				new PostTask() {
+					@Override
+					public void run(Object obj) {
+						usersLayout = (LinearLayout) findViewById(R.id.users_layout);
+						usersLayout.removeAllViews();
+						
+						for (User user : (List<User>) obj) {
+							addTeamMember(user);
+						}
+					}
+		});
+		
+		new SyncManager().getTeamTasks(
+				this, 
+				team.getId(), 
+				new Pair<String, String>("Loading team", "Retrieving tasks..."), 
+				new PostTask() {
+					@Override
+					public void run(Object obj) {
+						tasks = (List<Task>) obj;
+						LinearLayout taskLayout = (LinearLayout) findViewById(R.id.tasks_layout);
+						taskLayout.removeAllViews();
+						for (Task task : tasks) {
+							TextView userView = new TextView(TeamActivity.this);
+							userView.setLayoutParams(new LayoutParams(
+						            LayoutParams.MATCH_PARENT,
+						            LayoutParams.WRAP_CONTENT));
+							userView.setText(" - " + task.getName());
+							userView.setTextSize(24);
+							userView.setPadding(20, 0, 0, 10);
+							
+							taskLayout.addView(userView);
+						}
+					}
+		});
 	}
 
 	@Override
@@ -167,18 +170,32 @@ public class TeamActivity extends Activity {
 	}
 	
 	private void addTeamMember(User user) {
-		teamMembers.add(user);
+		if (!teamMembers.contains(user)) {
+			teamMembers.add(user);
+			
+			TextView userView = new TextView(TeamActivity.this);
+			userView.setLayoutParams(
+					new LayoutParams(
+		            LayoutParams.MATCH_PARENT,
+		            LayoutParams.WRAP_CONTENT));
+			userView.setText(" - " + user.getUsername());
+			userView.setTextSize(24);
+			userView.setPadding(20, 0, 0, 10);
+			
+			usersLayout.addView(userView);
+		}
+		else {
+			new AlertDialog.Builder(TeamActivity.this)
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setTitle("The user is already in the team")
+	        .setMessage("The user is already in the team")
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+	         {
+	        	public void onClick(DialogInterface arg0, int arg1) {
+	        	}
+	         }).show();
+		}
 		
-		TextView userView = new TextView(TeamActivity.this);
-		userView.setLayoutParams(
-				new LayoutParams(
-	            LayoutParams.MATCH_PARENT,
-	            LayoutParams.WRAP_CONTENT));
-		userView.setText(" - " + user.getUsername());
-		userView.setTextSize(24);
-		userView.setPadding(20, 0, 0, 10);
-		
-		usersLayout.addView(userView);
 	}
 	
 	public void createTask(View v) {
@@ -186,5 +203,10 @@ public class TeamActivity extends Activity {
 		i.putExtra("team", team);
 		i.putExtra("user", user);
 		startActivity(i);
+	}
+	
+	protected void onResume() {
+		super.onResume();
+		fillContent();
 	}
 }
