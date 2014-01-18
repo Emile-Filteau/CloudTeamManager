@@ -17,13 +17,13 @@
     <Button 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="Manage Calendar"
+	        android:text="My Calendar"
 	        android:onClick="startCalendarManagement"/>
     
     <Button 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="Manage Teams"
+	        android:text="My Teams"
 	        android:onClick="startTeamsManagement"/>
     
     </LinearLayout>

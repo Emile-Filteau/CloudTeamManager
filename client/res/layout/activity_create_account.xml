@@ -71,7 +71,7 @@
 	    <Button
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="Create account"
+	        android:text="Confirm"
 	        android:onClick="createAccount"/>
     </LinearLayout>
 </RelativeLayout>

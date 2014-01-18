@@ -57,11 +57,11 @@ public class TeamActivity extends Activity {
 
 		TabSpec spec2 = tabHost.newTabSpec("Meetups");
 		spec2.setContent(R.id.tab2);
-		spec2.setIndicator("Meetups");
+		spec2.setIndicator("Meetings");
 
 		TabSpec spec3 = tabHost.newTabSpec("Participants");
 		spec3.setContent(R.id.tab3);
-		spec3.setIndicator("Participants");
+		spec3.setIndicator("Members");
 		
 		tabHost.addTab(spec1);
 		tabHost.addTab(spec2);
