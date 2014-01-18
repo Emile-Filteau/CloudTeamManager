@@ -46,8 +46,6 @@ public class MainActivity extends Activity {
 							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
 							i.putExtra("user", user);
 							startActivity(i);
-							Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-							startActivity(i);
 						} else {
 							new AlertDialog.Builder(MainActivity.this)
 					        .setIcon(android.R.drawable.ic_dialog_alert)

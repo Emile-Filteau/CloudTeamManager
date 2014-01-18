@@ -1,36 +1,38 @@
 package com.cloudteammanager.dal.network;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.cloudteammanager.dal.Team;
 import com.cloudteammanager.dal.User;
 
 public class TeamDAO {
 	
-	private static String controller = "usermanager";
+	private static String controller = "teammanager";
 	
 	public static List<Team> getUserTeams(Integer user_id) {
-		List<Team> team = new ArrayList<Team>();
+		List<Team> teams = new ArrayList<Team>();
 		JSONObject params = new JSONObject();
 		try {
-			params.put("username", username);
-			params.put("password", password);
+			params.put("user_id", user_id);
 		} catch(JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
 		
-		String result = HTTPRequester.executeRequest(controller, "authenticate", params);
+		String result = HTTPRequester.executeRequest(controller, "getUserTeams", params);
 		try {
-			JSONObject json_result = new JSONObject(result);
-			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
+			JSONArray team_array = new JSONArray(result);
+			
 		} catch (JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
 		
-		return user;
+		return teams;
 	}
 }
