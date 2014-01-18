@@ -31,11 +31,12 @@ public class CalendarDAO {
 				events_array.put(event_object);
 			}
 			params.put("events", events_array.toString());
-			Log.i("test", params.toString());
 		} catch(JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
 		
-		HTTPRequester.executeRequest(controller, "syncCalendar", params);
+		String result = HTTPRequester.executeRequest(controller, "syncCalendar", params);
+		Log.i("test", "Result : " + result);
+		
 	}
 }
