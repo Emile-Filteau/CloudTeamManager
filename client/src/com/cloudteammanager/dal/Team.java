@@ -29,6 +29,11 @@ public class Team implements Parcelable {
 		return users;
 	}
 	
+	public Team(Parcel in) {
+		this.id = in.readInt();
+		this.name = in.readString();
+	}
+
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
@@ -37,8 +42,18 @@ public class Team implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
-		
-	}
+		dest.writeInt(id);
+		dest.writeString(name);
+	}	
+	
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Team createFromParcel(Parcel in) {
+            return new Team(in); 
+        }
+
+        public Team[] newArray(int size) {
+            return new Team[size];
+        }
+    };
 
 }

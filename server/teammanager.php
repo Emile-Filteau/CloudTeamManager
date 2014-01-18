@@ -15,6 +15,6 @@ if(isset($_POST["action"])) {
 	} else if($_POST["action"] == "getTeamMembers") {
 		echo(json_encode($action->getTeamMembers($params["team_id"])));
 	} else if($_POST["action"] == "addMemberToTeam") {
-		echo(json_encode($action->addMemberToTeam($params["team_id"], $params["user_id"])));
+		echo(json_encode($action->addMemberToTeam($params["team_id"], $params["username"])));
 	}
 }
