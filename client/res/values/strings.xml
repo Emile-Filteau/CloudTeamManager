@@ -5,7 +5,9 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_management_menu">Management Menu</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_calendar_management">CalendarManagementActivity</string>
-    <string name="title_activity_projects_management">ProjectsManagementActivity</string>
+    <string name="title_activity_calendar_management">Calendar Management</string>
+    <string name="title_activity_projects_management">Teams Management</string>
+    <string name="title_activity_create_account">Create Account</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

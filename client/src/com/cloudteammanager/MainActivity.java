@@ -59,4 +59,9 @@ public class MainActivity extends Activity {
 				}
 		);
 	}
+	
+	public void createNewAccount(View v) {
+		Intent i = new Intent(getApplicationContext(), CreateAccountActivity.class);
+		startActivity(i);
+	}
 }
