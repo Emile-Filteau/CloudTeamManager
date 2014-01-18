@@ -19,11 +19,25 @@
             android:layout_width="fill_parent"
     		android:layout_height="fill_parent"	>
     		
-           <LinearLayout
-               android:id="@+id/teamsLayout" 
-			   android:orientation="vertical"
+           <LinearLayout 
+			   android:orientation="horizontal"
 			   android:layout_width="fill_parent"
-			   android:layout_height="fill_parent"/>
+			   android:layout_height="fill_parent">
+			   
+	           <LinearLayout
+	               android:id="@+id/teamsLayout" 
+				   android:orientation="vertical"
+				   android:layout_weight="1"
+				   android:layout_width="fill_parent"
+				   android:layout_height="fill_parent"/>
+	           
+	           <LinearLayout
+	               android:id="@+id/teamsDeleteLayout"
+				   android:orientation="vertical"
+				   android:layout_weight="3"
+				   android:layout_width="fill_parent"
+				   android:layout_height="fill_parent"/>
+           </LinearLayout>
        </ScrollView>
      
    	   <Button 

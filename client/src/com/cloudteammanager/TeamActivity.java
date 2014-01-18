@@ -78,6 +78,7 @@ public class TeamActivity extends Activity {
 					public void run(Object obj) {
 						usersLayout = (LinearLayout) findViewById(R.id.users_layout);
 						usersLayout.removeAllViews();
+						teamMembers.clear();
 						
 						for (User user : (List<User>) obj) {
 							addTeamMember(user);

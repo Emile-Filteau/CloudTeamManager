@@ -11,5 +11,6 @@
     <string name="title_activity_create_task">Create New Task</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_team">Team</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
 
 </resources>
