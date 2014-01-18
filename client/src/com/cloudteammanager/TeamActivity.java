@@ -5,13 +5,19 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 import com.cloudteammanager.dal.SyncManager;
 import com.cloudteammanager.dal.Team;
@@ -41,6 +47,20 @@ public class TeamActivity extends Activity {
 					@Override
 					public void run(Object obj) {
 						teamMembers = (List<User>) obj;
+						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.users_layout);
+						
+						for (final User user : teamMembers) {
+							TextView userView = new TextView(TeamActivity.this);
+							userView.setLayoutParams(new LayoutParams(
+						            LayoutParams.MATCH_PARENT,
+						            LayoutParams.WRAP_CONTENT));
+							userView.setText(user.getUsername());
+
+							usersLayout.addView(userView);
+							usersLayout.refreshDrawableState();
+							
+							Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+						}
 					}
 		});
 		

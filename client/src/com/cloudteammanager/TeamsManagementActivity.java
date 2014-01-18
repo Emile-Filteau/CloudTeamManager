@@ -1,5 +1,6 @@
 package com.cloudteammanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import com.cloudteammanager.utils.PostTask;
 public class TeamsManagementActivity extends Activity {
 	private User user;
 	private List<Team> teams;
+	private LinearLayout teamsLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +33,15 @@ public class TeamsManagementActivity extends Activity {
 		setContentView(R.layout.activity_teams_management);
 		
 		user = getIntent().getExtras().getParcelable("user");
+		teams = new ArrayList<Team>();
 		
 		new SyncManager().getUserTeams(this, user.getId(), new Pair<String, String>("Loading teams", "Loading teams"), new PostTask() {
 			@Override
 			public void run(Object obj) {
-				teams = (List<Team>) obj;
+				teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
 
-				LinearLayout teamsLayout = (LinearLayout) findViewById(R.id.teamsLayout);
-
-				for (final Team team : teams) {
-					Button button = new Button(TeamsManagementActivity.this);
-					button.setText(team.getName());
-
-					teamsLayout.addView(button);
-					
-					button.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							Intent i = new Intent(getApplicationContext(), TeamActivity.class);
-							i.putExtra("team", team);
-							i.putExtra("user", user);
-							startActivity(i);
-						}				
-					});			
+				for (final Team team : (List<Team>) obj) {
+					addTeam(team);			
 				}
 			}			
 		});
@@ -92,7 +80,7 @@ public class TeamsManagementActivity extends Activity {
 									public void run(Object obj) {
 										Team team = (Team) obj;
 										
-										teams.add(team);
+										addTeam(team);
 										
 										Intent i = new Intent(getApplicationContext(), TeamActivity.class);
 										i.putExtra("team", team);
@@ -111,5 +99,24 @@ public class TeamsManagementActivity extends Activity {
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+	
+	private void addTeam(final Team team) {
+		teams.add(team);
+			
+		Button button = new Button(TeamsManagementActivity.this);
+		button.setText(team.getName());
+		
+		teamsLayout.addView(button);
+			
+		button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), TeamActivity.class);
+				i.putExtra("team", team);
+				i.putExtra("user", user);
+				startActivity(i);
+			}				
+		});			
 	}
 }
