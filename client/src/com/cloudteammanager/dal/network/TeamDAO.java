@@ -40,4 +40,26 @@ public class TeamDAO {
 		
 		return teams;
 	}
+	
+	public static Team createTeam(String teamName, Integer userId) {
+		Team team = null;
+		JSONObject params = new JSONObject();
+		try {
+			params.put("team_name", teamName);
+			params.put("user_id", userId);
+		} catch(JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		String result = HTTPRequester.executeRequest(controller, "createTeam", params);
+		try {
+			JSONObject team_obj = new JSONObject(result);
+			team = new Team(team_obj.getInt("id"), team_obj.getString("name"));
+			
+		} catch (JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		return team;
+	}
 }
