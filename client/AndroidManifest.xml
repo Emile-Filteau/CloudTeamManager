@@ -46,18 +46,6 @@
             android:name="com.cloudteammanager.TeamActivity"
             android:label="@string/title_activity_team" >
         </activity>
-        <activity
-            android:name="com.cloudteammanager.TeamParticipantsActivity"
-            android:label="@string/title_activity_team_participants" >
-        </activity>
-        <activity
-            android:name="com.cloudteammanager.TeamTasksActivity"
-            android:label="@string/title_activity_team_tasks" >
-        </activity>
-        <activity
-            android:name="com.cloudteammanager.TeamMeetupsActivity"
-            android:label="@string/title_activity_team_meetups" >
-        </activity>
     </application>
 
 </manifest>

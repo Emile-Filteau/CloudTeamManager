@@ -10,18 +10,21 @@ import java.util.regex.Pattern;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 import android.text.format.DateUtils;
 import android.util.Log;
 
 public class CalendarManager {
 	static Cursor cursor;
 	
-	public static final String[] FIELDS = { CalendarContract.Calendars.NAME,
+		public static final String[] FIELDS = { CalendarContract.Calendars.NAME,
 		  CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
 		  CalendarContract.Calendars.CALENDAR_COLOR,
 		  CalendarContract.Calendars.VISIBLE };
@@ -35,7 +38,7 @@ public class CalendarManager {
 		    contentResolver = ctx.getContentResolver();
 		  }
 
-		  public static ArrayList<Event> readCalendar(Context context) {
+		  public static ArrayList<Event> getCalendarEvents(Context context) {
 			  	ArrayList<Event> events = new ArrayList<Event>();
 			    ContentResolver contentResolver = context.getContentResolver();
 
@@ -99,6 +102,7 @@ public class CalendarManager {
 			                    final Date begin = new Date(eventCursor.getLong(1));
 			                    final Date end = new Date(eventCursor.getLong(2));
 			                    final Boolean allDay = !eventCursor.getString(3).equals("0");
+			                    System.out.println(title+begin.toString()+end.toString());
 			                    events.add(new Event("",title,begin,end,"",0));
 
 			                }
@@ -110,5 +114,67 @@ public class CalendarManager {
 			    return events;
 		  
 		  }
- 
+		  
+		  public void saveNewEvent(Context context,Event event) {
+			  long calID = 1;
+			  long startMillis = 0; 
+			  long endMillis = 0;
+			  Calendar beginTime = Calendar.getInstance();
+			  beginTime.setTime(event.getStart_date());
+			  startMillis = beginTime.getTimeInMillis();
+			  Calendar endTime = Calendar.getInstance();
+			  endTime.setTime(event.getEnd_date());
+			  endMillis = endTime.getTimeInMillis();
+	
+			  ContentResolver cr = context.getContentResolver();
+			  ContentValues values = new ContentValues();
+			  values.put(Events.DTSTART, startMillis);
+			  values.put(Events.DTEND, endMillis);
+			  values.put(Events.TITLE, event.getName());
+			  values.put(Events.DESCRIPTION, event.getDescription());
+			  values.put(Events.CALENDAR_ID, calID);
+			  values.put(Events.EVENT_TIMEZONE, "America/Los_Angeles");
+			  Uri uri = cr.insert(Events.CONTENT_URI, values);
+		  }
+		  
+		  public void goToNewEventFormOnCalendarActivity(Context context,Event event) {
+			  long calID = 1;
+			  long startMillis = 0; 
+			  long endMillis = 0;
+			  Calendar beginTime = Calendar.getInstance();
+			  beginTime.setTime(event.getStart_date());
+			  startMillis = beginTime.getTimeInMillis();
+			  Calendar endTime = Calendar.getInstance();
+			  endTime.setTime(event.getEnd_date());
+			  endMillis = endTime.getTimeInMillis();
+			  
+			  Intent intent = new Intent(Intent.ACTION_EDIT);  
+
+			  intent.setType("vnd.android.cursor.item/event");
+
+			  intent.putExtra("title", event.getName());
+
+			  intent.putExtra("description", event.getDescription());
+
+			  intent.putExtra("beginTime", startMillis);
+
+			  intent.putExtra("endTime", endMillis);
+
+			  context.startActivity(intent);
+		  }
+		  
+		  public void openCalendarActivity(Context context) {
+			// A date-time specified in milliseconds since the epoch.
+			  Calendar beginTime = Calendar.getInstance();
+			  beginTime.setTime(new Date());
+			  long startMillis = beginTime.getTimeInMillis();
+			 
+			  Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+			  builder.appendPath("time");
+			  ContentUris.appendId(builder, startMillis);
+			  Intent intent = new Intent(Intent.ACTION_VIEW)
+			      .setData(builder.build());
+			  context.startActivity(intent);
+		  }
+		
 }

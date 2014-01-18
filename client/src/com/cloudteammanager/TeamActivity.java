@@ -1,9 +1,9 @@
 package com.cloudteammanager;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -15,20 +15,21 @@ public class TeamActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team);
 
-		tabHost = (TabHost) findViewById(R.id.tab_host);
+		tabHost = (TabHost) findViewById(R.id.tabHost);
 		tabHost.setup();
 
-		TabSpec spec1 = tabHost.newTabSpec("TAB 1");
+		TabSpec spec1 = tabHost.newTabSpec("Tasks");
 		spec1.setContent(R.id.tab1);
-		spec1.setIndicator("TAB 1");
+		spec1.setIndicator("Tasks");
 
-		TabSpec spec2 = tabHost.newTabSpec("TAB 2");
-		spec2.setIndicator("TAB 2");
+		TabSpec spec2 = tabHost.newTabSpec("Meetups");
 		spec2.setContent(R.id.tab2);
+		spec2.setIndicator("Meetups");
 
-		TabSpec spec3 = tabHost.newTabSpec("TAB 3");
+		TabSpec spec3 = tabHost.newTabSpec("Participants");
 		spec3.setContent(R.id.tab3);
-		spec3.setIndicator("TAB 3");
+		spec3.setIndicator("Participants");
+		
 		tabHost.addTab(spec1);
 		tabHost.addTab(spec2);
 		tabHost.addTab(spec3);
@@ -41,4 +42,7 @@ public class TeamActivity extends Activity {
 		return true;
 	}
 
+	public void addUser(View v) {
+		// TODO: Logic to add users to a group
+	}
 }
