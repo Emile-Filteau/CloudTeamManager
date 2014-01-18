@@ -9,13 +9,14 @@ import android.view.Menu;
 import android.view.View;
 
 public class ManagementMenuActivity extends Activity {
-
+	private User user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_management_menu);
 		
-		User user = (User)this.getIntent().getExtras().getParcelable("user");
+		user = (User)this.getIntent().getExtras().getParcelable("user");
 	}
 
 	@Override
@@ -27,11 +28,13 @@ public class ManagementMenuActivity extends Activity {
 
 	public void startCalendarManagement(View v) {
 		Intent i = new Intent(getApplicationContext(), CalendarManagementActivity.class);
+		i.putExtra("user", user);
 		startActivity(i);
 	}
 	
 	public void startTeamsManagement(View v) {
 		Intent i = new Intent(getApplicationContext(), TeamsManagementActivity.class);
+		i.putExtra("user", user);
 		startActivity(i);
 	}
 }

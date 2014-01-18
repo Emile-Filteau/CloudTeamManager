@@ -17,14 +17,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cloudteammanager.dal.Team;
+import com.cloudteammanager.dal.User;
 
 public class TeamsManagementActivity extends Activity {
+	private User user;
 	private List<Team> teams;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teams_management);
+		
+		user = getIntent().getExtras().getParcelable("user");
 		
 		// TODO: Populate the team names with a query
 		teams = new ArrayList<Team>();
