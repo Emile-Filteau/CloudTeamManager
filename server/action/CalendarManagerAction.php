@@ -8,7 +8,7 @@ class CalendarManagerAction {
 	}
 	
 	public function syncCalendar($user_id, $events_array) {
-		//$events = json_decode($events_array);
+		$events = json_decode($events_array);
 		return CalendarDAO::syncCalendar($user_id, $events_array);
 	}
 }
