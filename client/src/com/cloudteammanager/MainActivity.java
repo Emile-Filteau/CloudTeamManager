@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
+	
 	public void connect(View v) {
 		// get EditText by id
 		EditText username = (EditText) findViewById(R.id.main_login_username);
@@ -58,10 +58,18 @@ public class MainActivity extends Activity {
 					}
 				}
 		);
+		
+		//UserDAO.authenticate(username.getText().toString(), password.getText().toString());
+		/*
+		if (inputTxt.getText().toString().equals("ok")) {
+			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+			startActivity(i);
+		}*/
 	}
 	
 	public void createNewAccount(View v) {
 		Intent i = new Intent(getApplicationContext(), CreateAccountActivity.class);
 		startActivity(i);
 	}
+
 }

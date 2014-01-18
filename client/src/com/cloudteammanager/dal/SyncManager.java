@@ -28,6 +28,16 @@ public class SyncManager {
 		execAsync(activity, task, postTask, alertMessages);
 	}
 	
+	public void register(Activity activity, final String username, final String password, final String email, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				User user = UserDAO.register(username, password, email);
+				setResult(user);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
 	private class Task implements Runnable {
 		private Object result;
 		public Object getResult() {

@@ -22,7 +22,28 @@ public class UserDAO {
 		}
 		
 		String result = HTTPRequester.executeRequest(controller, "authenticate", params);
-		Log.i("test", "result :" + result );
+		try {
+			JSONObject json_result = new JSONObject(result);
+			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
+		} catch (JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		return user;
+	}
+
+	public static User register(String username, String password, String email) {
+		User user = null;
+		JSONObject params = new JSONObject();
+		try {
+			params.put("username", username);
+			params.put("password", password);
+			params.put("email", email);
+		} catch(JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		String result = HTTPRequester.executeRequest(controller, "register", params);
 		try {
 			JSONObject json_result = new JSONObject(result);
 			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
