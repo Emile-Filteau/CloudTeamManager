@@ -23,12 +23,11 @@ public class MainActivity extends Activity {
 	}
 
 	public void connect(View v) {
-		// get EditText by id
-		EditText inputTxt = (EditText) findViewById(R.id.main_login_password);
-				
-		if (inputTxt.getText().toString().equals("ok")) {
-			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-			startActivity(i);
-		}
+		EditText usernameTxt = (EditText) findViewById(R.id.main_login_username);
+		EditText passwordTxt = (EditText) findViewById(R.id.main_login_password);
+
+		// TODO: Add verification for the username / password combo before starting the next activity
+		Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
+		startActivity(i);
 	}
 }

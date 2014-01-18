@@ -5,6 +5,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_management_menu">Management Menu</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_calendar_management">CalendarManagementActivity</string>
+    <string name="title_activity_projects_management">ProjectsManagementActivity</string>
 
 </resources>
