@@ -88,7 +88,8 @@ public class TeamDAO {
 		return users;
 	}
 	
-	public static void addMemberToTeam(Integer team_id, String username) {
+	public static User addMemberToTeam(Integer team_id, String username) {
+		User user = null;
 		JSONObject params = new JSONObject();
 		try {
 			params.put("username", username);
@@ -97,6 +98,15 @@ public class TeamDAO {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
 		
-		HTTPRequester.executeRequest(controller, "addMemberToTeam", params);
+		String result = HTTPRequester.executeRequest(controller, "addMemberToTeam", params);
+		
+		try {
+			JSONObject json_result = new JSONObject(result);
+			user = new User(json_result.getInt("id"), json_result.getString("username"), json_result.getString("email"));
+		} catch (JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		return user;
 	}
 }

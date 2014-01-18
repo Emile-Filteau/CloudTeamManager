@@ -79,6 +79,10 @@ class TeamDAO {
 		$statement2->setFetchMode(PDO::FETCH_ASSOC);
 		$statement2->execute();
 		$row = $statement2->fetch();
+		$user = $row;
+		//Remove the PASSWORD field
+		$passIndex = array_search('password', array_keys($user));
+		array_splice($user, $passIndex, 1);
 		
 		$statement = $connection->prepare('INSERT INTO team_members(user_id, team_id) VALUES (:user_id, :team_id)');
 
@@ -88,6 +92,7 @@ class TeamDAO {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		$statement->execute();
 		Connection::closeConnection();
+		return $user;
 	}
 	
 }
