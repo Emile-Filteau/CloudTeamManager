@@ -3,32 +3,19 @@ package com.cloudteammanager.dal.calendar;
 import java.util.Date;
 
 public class Event {
-	private String user;
 	private String name;
 	private Date start_date;
 	private Date end_date;
 	private String description;
 	private int priority;
 	
-	public Event(String user, String name, Date start_date, Date end_date,
-			String description, int priority) {
-		super();
-		this.user = user;
+	public Event(String name, Date start_date, Date end_date, String description, int priority) {
 		this.name = name;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.description = description;
 		this.priority = priority;
 	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
 	public String getName() {
 		return name;
 	}

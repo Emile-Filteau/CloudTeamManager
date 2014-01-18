@@ -8,5 +8,7 @@ $params = json_decode($paramString, true);
 if(isset($_POST["action"])) {
 	if($_POST["action"] == "syncCalendar") {;
 		echo(json_encode($action->syncCalendar($params["user_id"], $params["events"])));
+	} else if($_POST["action"] == "getTeamEvents") {;
+		echo(json_encode($action->getTeamEvents($params["team_id"])));
 	}
 }

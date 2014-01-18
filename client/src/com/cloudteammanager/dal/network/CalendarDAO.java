@@ -1,6 +1,7 @@
 package com.cloudteammanager.dal.network;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -38,5 +39,30 @@ public class CalendarDAO {
 		String result = HTTPRequester.executeRequest(controller, "syncCalendar", params);
 		Log.i("test", "Result : " + result);
 		
+	}
+	
+	public static List<Event> getTeamEvents(Integer team_id) {
+		List<Event> events = new ArrayList<Event>();
+		JSONObject params = new JSONObject();
+		try {
+			params.put("team_id", team_id);
+			
+		} catch(JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		String result = HTTPRequester.executeRequest(controller, "getTeamEvents", params);
+		
+		try {
+			JSONArray events_array = new JSONArray(result);
+			for(int i=0;i<events_array.length();i++) {
+				JSONObject event_object = new JSONObject(events_array.getString(i));
+				Event event = new Event(event_object.getString("name"), new Date(event_object.getInt("START_DATE")), new Date(event_object.getInt("END_DATE")), event_object.getString("description"), event_object.getInt("priority"));
+				events.add(event);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return events;
 	}
 }

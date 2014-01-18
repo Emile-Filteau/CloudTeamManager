@@ -29,4 +29,30 @@ class CalendarDAO {
 			$statement->execute();
 		}
 	}
+	
+	public static function getTeamEvents($team_id) {
+		$connection = Connection::getConnection();
+		$now = time();
+		$then = $now + 21 * 24 * 60 * 60 * 1000;
+		$statement = $connection->prepare('SELECT * FROM calendar_events 
+		WHERE user_id in (SELECT user_id FROM team_members WHERE team_id = :team_id)
+		AND
+		START_DATE >= :now
+		AND
+		END_DATE <= :after');
+		
+		$statement->bindParam(":team_id", $team_id);
+		$statement->bindParam(":now", $now);
+		$statement->bindParam(":after", $then);
+		
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		$statement->execute();
+		$dispos = array();
+		while($row = $statement->fetch()) {
+			array_push($dispos, $row);
+		}
+		
+		Connection::closeConnection();
+		return $dispos;
+	}
 }

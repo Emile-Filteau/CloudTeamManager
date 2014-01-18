@@ -109,6 +109,15 @@ public class SyncManager {
 		execAsync(activity, task, postTask, alertMessages);
 	}
 	
+	public void getTeamEvents(Activity activity, final Integer team_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				setResult(CalendarDAO.getTeamEvents(team_id));
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
 	private class Task implements Runnable {
 		private Object result;
 		public Object getResult() {

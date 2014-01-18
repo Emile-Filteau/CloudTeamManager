@@ -104,7 +104,7 @@ public class CalendarManager {
 			                    final Date end = new Date(eventCursor.getLong(2));
 			                    final Boolean allDay = !eventCursor.getString(3).equals("0");
 			                    System.out.println(title+begin.toString()+end.toString());
-			                    events.add(new Event("",title,begin,end,"",0));
+			                    events.add(new Event(title,begin,end,"",0));
 
 			                }
 			                while(eventCursor.moveToNext());
