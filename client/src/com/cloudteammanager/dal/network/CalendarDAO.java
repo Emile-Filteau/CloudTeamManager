@@ -30,7 +30,7 @@ public class CalendarDAO {
 				event_object.put("end_date", event.getEnd_date().getTime());
 				events_array.put(event_object);
 			}
-			params.put("events", events_array.toString());
+			params.put("events", events_array);
 		} catch(JSONException e) {
 			Log.e("UserDAO::authenticate", e.getMessage());
 		}
