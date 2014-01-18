@@ -58,12 +58,5 @@ public class MainActivity extends Activity {
 					}
 				}
 		);
-		
-		//UserDAO.authenticate(username.getText().toString(), password.getText().toString());
-		/*
-		if (inputTxt.getText().toString().equals("ok")) {
-			Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
-			startActivity(i);
-		}*/
 	}
 }
