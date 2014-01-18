@@ -7,5 +7,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TeamsManagementActivity" >
-
+	
+    <LinearLayout
+        android:orientation="vertical"
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		
+       <ScrollView
+            android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"	>
+    		
+           <LinearLayout
+               android:id="@+id/teamsLayout" 
+			   android:orientation="vertical"
+			   android:layout_width="fill_parent"
+			   android:layout_height="fill_parent"/>
+       </ScrollView>
+     
+   	   <Button 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Add Team"
+	        android:onClick="addTeam"/>
+     </LinearLayout>     
 </RelativeLayout>

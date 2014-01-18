@@ -30,4 +30,9 @@ public class MainActivity extends Activity {
 		Intent i = new Intent(getApplicationContext(), ManagementMenuActivity.class);
 		startActivity(i);
 	}
+	
+	public void createNewAccount(View v) {
+		Intent i = new Intent(getApplicationContext(), CreateAccountActivity.class);
+		startActivity(i);
+	}
 }
