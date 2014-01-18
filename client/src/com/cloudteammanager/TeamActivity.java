@@ -49,17 +49,18 @@ public class TeamActivity extends Activity {
 						teamMembers = (List<User>) obj;
 						LinearLayout usersLayout = (LinearLayout) findViewById(R.id.users_layout);
 						
-						for (final User user : teamMembers) {
+						for (User user : teamMembers) {
 							TextView userView = new TextView(TeamActivity.this);
 							userView.setLayoutParams(new LayoutParams(
 						            LayoutParams.MATCH_PARENT,
 						            LayoutParams.WRAP_CONTENT));
-							userView.setText(user.getUsername());
-
-							usersLayout.addView(userView);
-							usersLayout.refreshDrawableState();
+							userView.setText(" - " + user.getUsername());
+							userView.setTextSize(24);
+							userView.setPadding(20, 0, 0, 10);
 							
-							Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+							usersLayout.addView(userView);
+							
+							//Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
 						}
 					}
 		});
