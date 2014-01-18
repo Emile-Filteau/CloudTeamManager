@@ -71,4 +71,17 @@ class TeamDAO {
 		return $users;
 	}
 	
+	public static function addMemberToTeam($team_id, $user_id) {
+		$connection = Connection::getConnection();
+		
+		$statement = $connection->prepare('INSERT INTO team_members(user_id, team_id) VALUES (:user_id, :team_id)');
+		
+		$statement->bindParam(":user_id", $user_id);
+		$statement->bindParam(":team_id", $team_id);
+		
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		$statement->execute();
+		Connection::closeConnection();
+	}
+	
 }

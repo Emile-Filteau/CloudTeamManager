@@ -70,6 +70,15 @@ public class SyncManager {
 		};
 		execAsync(activity, task, postTask, alertMessages);
 	}
+
+	public void addMemberToTeam(Activity activity, final Integer team_id, final Integer user_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				TeamDAO.addMemberToTeam(team_id, user_id);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
 	
 	public void syncCalendar(Activity activity, final Integer user_id, final List<Event> events, Pair<String, String> alertMessages, PostTask postTask) {
 		Task task = new Task() {

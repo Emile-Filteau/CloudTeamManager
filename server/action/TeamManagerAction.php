@@ -18,4 +18,8 @@ class TeamManagerAction {
 	public function getTeamMembers($team_id) {
 		return TeamDAO::getTeamMembers($team_id);
 	}
+	
+	public function addMemberToTeam($team_id, $user_id) {
+		return TeamDAO::addMemberToTeam($team_id, $user_id);
+	}
 }
