@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import com.cloudteammanager.dal.calendar.CalendarManager;
 import com.cloudteammanager.dal.calendar.Event;
@@ -38,32 +39,33 @@ public class CalendarManagementActivity extends Activity {
 	  }
 
 	  public void createData() {
-		/*CalendarManager calendarManager = new CalendarManager(this);
+		CalendarManager calendarManager = new CalendarManager(this);
 		ArrayList<Event> listeEvents = calendarManager.getCalendarEvents(this);
 		ArrayList<String> diffDate = new ArrayList<String>();
-
+		DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.ENGLISH);
 		String datePrecedente = null;
 		for(Event event:listeEvents){
 			if(datePrecedente==null){
-				datePrecedente=event.getStart_date().getDay() + " " + event.getStart_date().getDate() + " " + event.getStart_date().getMonth() ;
+				datePrecedente=df.format(event.getStart_date());
 				diffDate.add(datePrecedente);
 			}
 			else{
-				if(diffDate.get(diffDate.size()-1).equals(event.getStart_date().getDay() + " " + event.getStart_date().getDate() + " " + event.getStart_date().getMonth()))
-					diffDate.add(event.getStart_date().getDay() + " " + event.getStart_date().getDate() + " " + event.getStart_date().getMonth());
+				if(!diffDate.get(diffDate.size()-1).equals(df.format(event.getStart_date())))
+					diffDate.add(df.format(event.getStart_date()));
 			}
 				
 			
 		}
 		
 		  
-	    for (int j = 1; j < diffDate.size(); j++) {
+	    for (int j = 0; j < diffDate.size(); j++) {
 	      Group group = new Group(diffDate.get(j));
-	      for (int i = 0; i < 5; i++) {
-	        group.children.add("Sub Item" + i);
+	      for (int i = 0; i < listeEvents.size(); i++) {
+	    	  if(diffDate.get(j).equals(df.format(listeEvents.get(i).getStart_date())))
+	    		  group.children.add(listeEvents.get(i).getName());
 	      }
 	      groups.append(j, group);
-	    }*/
+	    }
 	  }
 		
 		
