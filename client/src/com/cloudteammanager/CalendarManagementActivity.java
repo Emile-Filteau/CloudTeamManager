@@ -104,8 +104,10 @@ public class CalendarManagementActivity extends Activity {
 		 });
 	 }
 	 
-	 public void addEvent(View v) {
-		 Intent i = new Intent(getApplicationContext(), CreateEventActivity.class);
+	 public void createEvent(View v) {
+		 /*Intent i = new Intent(getApplicationContext(), CreateEventActivity.class);
 		 startActivity(i);
+		 finish();*/
+		 this.calendarManager.openCalendarActivity(this);
 	 }
 }
