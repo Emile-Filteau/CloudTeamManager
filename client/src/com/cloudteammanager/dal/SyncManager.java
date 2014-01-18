@@ -100,6 +100,15 @@ public class SyncManager {
 		execAsync(activity, task, postTask, alertMessages);
 	}
 	
+	public void createTask(Activity activity, final Integer team_id, final String name, final int estimated_time, final int member_id, Pair<String, String> alertMessages, PostTask postTask) {
+		Task task = new Task() {
+			public void run() {
+				TaskDAO.createTask(team_id, name, estimated_time, member_id);
+			}
+		};
+		execAsync(activity, task, postTask, alertMessages);
+	}
+	
 	private class Task implements Runnable {
 		private Object result;
 		public Object getResult() {

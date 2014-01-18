@@ -3,6 +3,7 @@ package com.cloudteammanager.listAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cloudteammanager.R;
 import com.cloudteammanager.dal.Task;
 
 import android.app.Activity;
@@ -42,12 +43,13 @@ public class TaskListAdapter extends BaseAdapter {
     }
  
     public View getView(int position, View convertView, ViewGroup parent) {
-        View vi=convertView;/*
+        View vi=convertView;
+        /*
         if(convertView==null)
-            vi = inflater.inflate(R.layout.player_row, null);
+            vi = inflater.inflate(R.layout.task_row, null);
 
-        TextView username = (TextView)vi.findViewById(R.id.usernameTextView);
-        TextView status = (TextView)vi.findViewById(R.id.statusTextView);
+        TextView taskName = (TextView)vi.findViewById(R.id.task_row_name);
+        TextView memberName = (TextView)vi.findViewById(R.id.task_row_member);
         TextView owner = (TextView)vi.findViewById(R.id.ownerTextView);
  
         Player p = data.get(position);

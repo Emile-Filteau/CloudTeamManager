@@ -40,4 +40,18 @@ public class TaskDAO {
 		
 		return tasks;
 	}
+	
+	public static void createTask(int team_id, String name, int estimated_time, int member_id) {
+		JSONObject params = new JSONObject();
+		try {
+			params.put("team_id", team_id);
+			params.put("name", name);
+			params.put("estimated_time", estimated_time);
+			params.put("member_id", member_id);
+		} catch(JSONException e) {
+			Log.e("UserDAO::authenticate", e.getMessage());
+		}
+		
+		HTTPRequester.executeRequest(controller, "getTeamTasks", params);
+	}
 }
