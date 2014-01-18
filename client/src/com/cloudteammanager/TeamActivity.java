@@ -1,7 +1,14 @@
 package com.cloudteammanager;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +23,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -23,6 +31,7 @@ import com.cloudteammanager.dal.SyncManager;
 import com.cloudteammanager.dal.Task;
 import com.cloudteammanager.dal.Team;
 import com.cloudteammanager.dal.User;
+import com.cloudteammanager.dal.calendar.Event;
 import com.cloudteammanager.utils.Pair;
 import com.cloudteammanager.utils.PostTask;
 
@@ -109,6 +118,37 @@ public class TeamActivity extends Activity {
 						}
 					}
 		});
+		
+		new SyncManager().getTeamEvents(
+				this, 
+				team.getId(), 
+				new Pair<String, String>("Generating availabilities", "Generating availabilities..."),
+				new PostTask() {
+					@Override
+					public void run(Object obj) {
+						List<Event> availabilities = generateAvailabilities((List<Event>) obj);
+						
+						LinearLayout meetupLayout = (LinearLayout) findViewById(R.id.meetups_layout);
+						meetupLayout.removeAllViews();
+						for (Event event : availabilities) {
+							TextView userView = new TextView(TeamActivity.this);
+							userView.setLayoutParams(new LayoutParams(
+						            LayoutParams.MATCH_PARENT,
+						            LayoutParams.WRAP_CONTENT));
+							
+							SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+							
+							String startDate = df.format(event.getStart_date());
+							String endDate = df.format(event.getEnd_date());
+								
+							userView.setText(startDate + "    " + endDate);
+							
+							userView.setTextSize(12);
+							userView.setPadding(20, 0, 0, 10);
+							
+							meetupLayout.addView(userView);
+						}
+					}});
 	}
 
 	@Override
@@ -204,6 +244,79 @@ public class TeamActivity extends Activity {
 		i.putExtra("team", team);
 		i.putExtra("user", user);
 		startActivity(i);
+	}
+	
+	private List<Event> generateAvailabilities(List<Event> events) {
+		List<Event> availableEvents = new ArrayList<Event>();
+		
+		for(Event event : events)
+		{
+			Log.d("Adam", event.toString());			
+		}
+		
+		
+		GregorianCalendar testDate = new GregorianCalendar();
+		GregorianCalendar testDate2 = new GregorianCalendar();
+		
+		testDate.set(Calendar.HOUR_OF_DAY, 14);
+		testDate2.set(Calendar.HOUR_OF_DAY, 16);
+		
+		events.add(new Event("Unavailable", (Date)testDate.getTime().clone(), (Date)testDate2.getTime().clone(), "Not during availability period", 1));
+		
+		GregorianCalendar startDate = new GregorianCalendar();
+		GregorianCalendar endDate = new GregorianCalendar();
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		
+		long startMinutes = startDate.getTime().getTime() / 60 / 1000;
+		
+		endDate.set(Calendar.HOUR_OF_DAY, 7);
+		endDate.set(Calendar.MINUTE, 0);
+		
+		events.add(new Event("Unavailable", (Date)startDate.getTime().clone(), (Date)endDate.getTime().clone(), "Not during availability period", 1));
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 22);
+		endDate.add(Calendar.DAY_OF_MONTH, 1);
+		endDate.set(Calendar.HOUR_OF_DAY, 7);
+		
+		for(int i = 1; i < 20; i++) {
+			events.add(new Event("Unavailable", (Date)startDate.getTime().clone(), (Date)endDate.getTime().clone(), "Not during availability period", 1));
+			
+			startDate.add(Calendar.DAY_OF_MONTH, 1);
+			endDate.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		
+		long endMinutes = endDate.getTime().getTime() / 60 / 1000;
+		
+		Collections.sort(events);
+		
+		List<Long> minutes = new ArrayList<Long>();
+		
+		for(long i = startMinutes; i <= endMinutes; i++) {
+			minutes.add(i);
+		}
+		
+		for(Event event : events) {
+			for (int i = minutes.size() - 1; i >= 0; i--) {
+				if (minutes.get(i) >= event.getStart_date().getTime() / 60 / 1000 && minutes.get(i) <= event.getEnd_date().getTime() / 60 / 1000) {
+					minutes.remove(i);
+				}
+			}
+		}
+		
+		long startMinute = minutes.get(0);
+		
+		for (int i = 1; i < minutes.size(); i++) {
+			if (minutes.get(i) > minutes.get(i - 1) + 1) {
+				availableEvents.add(new Event("Available", new Date(startMinute * 60 * 1000), new Date(minutes.get(i - 1) * 60 * 1000), "Everyone is available", 1));
+				startMinute = minutes.get(i);
+			}			
+		}
+		
+		availableEvents.add(new Event("Available", new Date(startMinute * 60 * 1000), new Date(minutes.get(minutes.size() - 1) * 60 * 1000), "Everyone is available", 1));
+				
+		return availableEvents;
 	}
 	
 	protected void onResume() {

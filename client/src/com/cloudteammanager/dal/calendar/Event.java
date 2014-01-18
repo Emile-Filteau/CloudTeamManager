@@ -1,8 +1,9 @@
 package com.cloudteammanager.dal.calendar;
 
+import java.util.Calendar;
 import java.util.Date;
 
-public class Event {
+public class Event implements Comparable{
 	private String name;
 	private Date start_date;
 	private Date end_date;
@@ -56,4 +57,20 @@ public class Event {
 		this.priority = priority;
 	}
 	
+	@Override
+	public int compareTo(Object another) {
+		if (start_date.getTime() < ((Event) another).start_date.getTime()) {
+			return -1;
+		}
+		else if (start_date.getTime() > ((Event) another).start_date.getTime()) {
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		return "Start date: " + start_date.getTime() + "    End date: " + end_date.getTime();
+	}
 }
