@@ -55,6 +55,15 @@ public class User implements Parcelable {
 		dest.writeString(email);
 	}	
 	
+	@Override
+	public boolean equals(Object user) {
+		if (!(user instanceof User)) {
+			return false;
+		}
+		
+		return id.equals(((User) user).id);		
+	}
+	
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public User createFromParcel(Parcel in) {
             return new User(in); 

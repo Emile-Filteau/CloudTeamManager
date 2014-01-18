@@ -1,21 +1,19 @@
 package com.cloudteammanager;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.SparseArray;
+import android.view.Menu;
+import android.widget.ExpandableListView;
 
 import com.cloudteammanager.dal.calendar.CalendarManager;
 import com.cloudteammanager.dal.calendar.Event;
 import com.cloudteammanager.listview.expandable.Group;
 import com.cloudteammanager.listview.expandable.MyExpandableListAdapter;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.util.SparseArray;
-import android.view.Menu;
-import android.widget.ExpandableListView;
 
 public class CalendarManagementActivity extends Activity {
 	SparseArray<Group> groups = new SparseArray<Group>();
@@ -52,11 +50,8 @@ public class CalendarManagementActivity extends Activity {
 			else{
 				if(!diffDate.get(diffDate.size()-1).equals(df.format(event.getStart_date())))
 					diffDate.add(df.format(event.getStart_date()));
-			}
-				
-			
+			}			
 		}
-		
 		  
 	    for (int j = 0; j < diffDate.size(); j++) {
 	      Group group = new Group(diffDate.get(j));
