@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -38,8 +39,8 @@ public class CalendarManager {
 		    contentResolver = ctx.getContentResolver();
 		  }
 
-		  public static ArrayList<Event> getCalendarEvents(Context context) {
-			  	ArrayList<Event> events = new ArrayList<Event>();
+		  public static List<Event> getCalendarEvents(Context context) {
+			  	List<Event> events = new ArrayList<Event>();
 			    ContentResolver contentResolver = context.getContentResolver();
 
 			    // Fetch a list of all calendars synced with the device, their display names and whether the

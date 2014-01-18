@@ -1,26 +1,41 @@
 package com.cloudteammanager;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.SparseArray;
-import android.view.Menu;
-import android.widget.ExpandableListView;
-
+import com.cloudteammanager.dal.SyncManager;
+import com.cloudteammanager.dal.User;
 import com.cloudteammanager.dal.calendar.CalendarManager;
 import com.cloudteammanager.dal.calendar.Event;
 import com.cloudteammanager.listview.expandable.Group;
 import com.cloudteammanager.listview.expandable.MyExpandableListAdapter;
+import com.cloudteammanager.utils.Pair;
+import com.cloudteammanager.utils.PostTask;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.util.SparseArray;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 public class CalendarManagementActivity extends Activity {
 	SparseArray<Group> groups = new SparseArray<Group>();
+	private User user;
+	CalendarManager calendarManager; 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_calendar_management);
+		user = (User)this.getIntent().getExtras().getParcelable("user");
+		this.calendarManager= new CalendarManager(this);
 	}
 
 	@Override
@@ -37,8 +52,7 @@ public class CalendarManagementActivity extends Activity {
 	  }
 
 	  public void createData() {
-		CalendarManager calendarManager = new CalendarManager(this);
-		ArrayList<Event> listeEvents = calendarManager.getCalendarEvents(this);
+		List<Event> listeEvents = CalendarManager.getCalendarEvents(this);
 		ArrayList<String> diffDate = new ArrayList<String>();
 		DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.ENGLISH);
 		String datePrecedente = null;
@@ -50,8 +64,11 @@ public class CalendarManagementActivity extends Activity {
 			else{
 				if(!diffDate.get(diffDate.size()-1).equals(df.format(event.getStart_date())))
 					diffDate.add(df.format(event.getStart_date()));
-			}			
+			}
+				
+			
 		}
+		
 		  
 	    for (int j = 0; j < diffDate.size(); j++) {
 	      Group group = new Group(diffDate.get(j));
@@ -63,6 +80,24 @@ public class CalendarManagementActivity extends Activity {
 	    }
 	  }
 		
-		
+	 public void syncCalendar(View v){
+		 SyncManager syncManager = new SyncManager();
+		 syncManager.syncCalendar(this, user.getId(), CalendarManager.getCalendarEvents(this), 
+				 new Pair<String, String>("Calendar", "synchronizing calendar..."),
+				 new PostTask() {
+					public void run(Object obj) {
+						new AlertDialog.Builder(CalendarManagementActivity.this)
+				        .setIcon(android.R.drawable.ic_dialog_alert)
+				        .setTitle("Calendar")
+				        .setMessage("calendar synchronized successfully")
+				        .setPositiveButton("OK", new DialogInterface.OnClickListener()
+				         {
+				        	public void onClick(DialogInterface arg0, int arg1) {
+				        	}
+				         }).show();
+					}
+		 });
+	 }
+	 
 
 }
